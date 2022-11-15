@@ -39,7 +39,7 @@ class TasksController extends Controller
     {
         $tasks= new Tasks();
         $tasks->Nom_de_la_tache=$request->Nom_de_la_tache;
-        $tasks->briefs_id=$request->briefs_id;
+        $tasks->briefs_id=5;
         $tasks->save();
         if($tasks->save()){
             return ['data has been add'];
