@@ -1,19 +1,46 @@
 <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
 <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.1.3/axios.min.js" integrity="sha512-0qU9M9jfqPw6FKkPafM3gy2CBAvUWnYVOfNPDYKVuRTel1PrciTj+a9P3loJB+j0QmN2Y0JYQmkBBS8W+mbezg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
 <html>
     <div id="root"></div>
 </html>
-<script type="text/babel">
+<script  ></script>
+<!-- <script src="./components/table.js" type="text/babel"></script> -->
 
-import Table from './components/Table';
+<script  type="text/babel">
 
-    class App extends React.Component{
+    // import React from 'react';
+class App extends React.Component{
+    state={
+        name:'',
+        data:""
+    }
+
+    handleChange=(event)=>{
+        console.log(event.target.value)
+        this.setState({
+            name :event.target.value
+        })
+    }
+    handleSubmit=(event)=>{
+        event.preventDefault();    
+        this.setState({
+            data:this.state.name
+        })
+    }
+    
+    
     render(){
+        console.log(this.state)
       return(
             <div>
-               <h1><Table/> </h1>
-            </div>
+                <form  onSubmit={this.handleSubmit}>
+               Tach  <input name='name' onChange={this.handleChange} ></input> 
+               <button>dd</button>
+            </form>
+            <h1>{this.state.data}</h1>
+                </div>
         )
     }
 }

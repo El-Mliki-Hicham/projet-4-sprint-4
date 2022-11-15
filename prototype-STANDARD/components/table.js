@@ -1,7 +1,10 @@
 import React from 'react';
-class Table extends React.Component{
+export class TableData extends React.Component{
     render(){
-            return("dd"            )
+      return(
+            <div>
+            dddd
+            </div>
+        )
     }
-}
-export default Table ;
+}  ;
