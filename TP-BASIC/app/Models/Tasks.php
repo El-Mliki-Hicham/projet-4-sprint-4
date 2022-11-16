@@ -7,13 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Tasks extends Model
 {
-    protected $table = "tasks";
+    protected $table = "task";
     public $timestamps= false;
     protected $fillable = [
 
-        'Nom_de_la_tâche',
-        'Début_de_la_tâche',
-        'Fin_de_la_tâche',
-        'briefs_id'
+        'Task',
+
     ];
 }

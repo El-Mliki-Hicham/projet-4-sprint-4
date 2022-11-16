@@ -38,8 +38,8 @@ class TasksController extends Controller
     public function store(Request $request)
     {
         $tasks= new Tasks();
-        $tasks->Nom_de_la_tache=$request->Nom_de_la_tache;
-        $tasks->briefs_id=5;
+        $tasks->Task=$request->Task;
+
         $tasks->save();
         if($tasks->save()){
             return ['data has been add'];
@@ -55,9 +55,10 @@ class TasksController extends Controller
      * @param  \App\Models\Tasks  $tasks
      * @return \Illuminate\Http\Response
      */
-    public function show(Tasks $tasks)
+    public function show($id)
     {
-        //
+        $tasks =Tasks::find($id);
+        return  $tasks;
     }
 
     /**
@@ -82,7 +83,7 @@ class TasksController extends Controller
     {
 
         $tasks= Tasks::find($id);
-        $tasks->Nom_de_la_tache=$request->Nom_de_la_tache;
+        $tasks->Task=$request->Task;
         $tasks->save();
         if($tasks->save()){
             return ['data has been update'];
