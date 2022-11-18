@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Tasks;
 use Illuminate\Console\View\Components\Task;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class TasksController extends Controller
 {
@@ -15,7 +16,8 @@ class TasksController extends Controller
      */
     public function index()
     {
-        $tasks =Tasks::all();
+        $tasks =Tasks::select(DB::raw("TIMESTAMPDIFF(HOUR,start_date, end_date) AS Period"),'Task.*')->get();
+
         return  $tasks;
     }
 
