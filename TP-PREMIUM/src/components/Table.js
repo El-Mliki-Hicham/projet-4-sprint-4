@@ -49,7 +49,7 @@ class Table extends React.Component{
                     Task:res.data.Task,
                     id:res.data.id
                 })
-                console.log(this.state)
+            
         })
        
         let btnAdd= document.querySelector("#btnAdd");
@@ -71,7 +71,7 @@ class Table extends React.Component{
 
     render() {
 
-        console.log(this.state)
+      
         return (
             <div>
                tache <input type="text" value={this.state.Task}  onChange={this.handleChange} ></input>
