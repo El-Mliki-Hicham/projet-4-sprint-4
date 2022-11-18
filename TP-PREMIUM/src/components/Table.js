@@ -74,9 +74,13 @@ class Table extends React.Component{
       
         return (
             <div>
-               tache <input type="text" value={this.state.Task}  onChange={this.handleChange} ></input>
+               Task <input type="text" value={this.state.Task}  onChange={this.handleChange} ></input>
+               <br></br>
+               Start date <input type="datetime-local"></input><br>
+                </br>
+               end date <input type="datetime-local"></input>
                 <button id="btnAdd" className="btn btn-primary" onClick={this.handleSubmit}>ajouter</button>
-            
+                <br></br>
                 <button id="btnUpdate" style={{display:"none"}} className="btn btn-warning"  onClick={()=>this.handleUpdate(this.state.id)}>update</button>
 
             <table className="table">

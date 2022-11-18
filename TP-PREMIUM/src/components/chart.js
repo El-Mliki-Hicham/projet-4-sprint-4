@@ -16,6 +16,8 @@ class Chart extends React.Component{
               indexAxis: 'x',   
           }],
         }
+
+
     render(){
         return(
             <div style={{width:600}}>
