@@ -4,7 +4,7 @@ import axios from 'axios';
 class Table extends React.Component{
 
     state={
-        Task:[],
+        Nom_de_la_tache:[],
         id:'',
         data:[],
     }
@@ -21,12 +21,13 @@ class Table extends React.Component{
 
     handleChange=(event)=>{
         this.setState({
-            Task:event.target.value
+            Nom_de_la_tache:event.target.value
         })
     }
 
     handleSubmit=(event)=>{
-        axios.post('http://127.0.0.1:8000/api/task/store',this.state)
+        // console.log('ff')
+        axios.post('http://127.0.0.1:8000/api/task',this.state)
         .then((res)=>{
             alert('data has been Add')
             window.location.reload(false)
@@ -46,7 +47,7 @@ class Table extends React.Component{
         axios.get('http://127.0.0.1:8000/api/task/'+id)
         .then(res=>{
                 this.setState({
-                    Task:res.data.Task,
+                    Nom_de_la_tache:res.data.Nom_de_la_tache,
                     id:res.data.id
                 })
             
@@ -74,11 +75,11 @@ class Table extends React.Component{
       
         return (
             <div>
-               Task <input type="text" value={this.state.Task}  onChange={this.handleChange} ></input>
+               Task <input type="text" value={this.state.Nom_de_la_tache}  onChange={this.handleChange} ></input>
                <br></br>
-               Start date <input type="datetime-local"></input><br>
+               {/* Start date <input type="datetime-local"></input><br>
                 </br>
-               end date <input type="datetime-local"></input>
+               end date <input type="datetime-local"></input> */}
                 <button id="btnAdd" className="btn btn-primary" onClick={this.handleSubmit}>ajouter</button>
                 <br></br>
                 <button id="btnUpdate" style={{display:"none"}} className="btn btn-warning"  onClick={()=>this.handleUpdate(this.state.id)}>update</button>
@@ -95,7 +96,7 @@ class Table extends React.Component{
                     {this.state.data.map((task)=>(
                         <tr id='tr' key={task.id} >
                             <td>{task.id} </td>
-                            <td >{task.Task} </td>
+                            <td >{task.Nom_de_la_tache} </td>
                             <td><button className="btn btn-danger" onClick={(()=>this.handleDelete(task.id))}>delete</button> </td>
                             <td><button className="btn btn-warning" onClick={(()=>this.handleEdit(task.id))}>Edit</button> </td>
                         </tr>
