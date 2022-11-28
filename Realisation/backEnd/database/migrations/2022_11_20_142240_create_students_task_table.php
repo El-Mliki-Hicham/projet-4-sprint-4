@@ -21,8 +21,8 @@ return new class extends Migration
             $table->foreign('student_id')->references('id')->on('students')->onDelete('cascade');
             $table->foreign('tasks_id')->references('id')->on('tasks')->onDelete('cascade');
             $table->string('Etat')->default('en pouse');
-            $table->timestamp("date_debut");
-            $table->timestamp("date_fin");
+            $table->timestamp("date_debut")->nullable();
+            $table->timestamp("date_fin")->nullable();
         });
     }
 

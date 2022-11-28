@@ -9,34 +9,15 @@ use Illuminate\Support\Facades\DB;
 
 class TasksController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
-        $tasks =Tasks::select(DB::raw("TIMESTAMPDIFF(HOUR,start_date, end_date) AS Period"),'Task.*')->get();
-
+        // $tasks =Tasks::select(DB::raw("TIMESTAMPDIFF(HOUR,start_date, end_date) AS Period"),'Task.*')->get();
+        $tasks = Tasks::all();
         return  $tasks;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
 
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $tasks= new Tasks();
@@ -63,24 +44,7 @@ class TasksController extends Controller
         return  $tasks;
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Tasks  $tasks
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Tasks $tasks)
-    {
-        //
-    }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Tasks  $tasks
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
 

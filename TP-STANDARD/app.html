@@ -23,7 +23,7 @@ class App extends React.Component{
 
 
     componentDidMount(){
-        axios.get("http://127.0.0.1:8000/api/task")
+        axios.get("http://127.0.0.1:8090/api/task")
         .then(res=>{
             const data = res.data;
             
@@ -46,7 +46,7 @@ class App extends React.Component{
     handleSubmit=async(event)=>{
         event.preventDefault();    
        
-      await axios.post("http://127.0.0.1:8000/api/task/store",this.state)
+      await axios.post("http://127.0.0.1:8090/api/task/store",this.state)
         .then(res => {
         console.log(res);
         console.log(res.data);
@@ -57,7 +57,7 @@ class App extends React.Component{
     }
 
     handleDelete=(id)=>{
-        axios.delete("http://127.0.0.1:8000/api/task/delete/"+id)
+        axios.delete("http://127.0.0.1:8090/api/task/delete/"+id)
         .then((res)=>{
             alert("add hass been deleted")
             window.location.reload(false); 

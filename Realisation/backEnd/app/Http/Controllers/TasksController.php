@@ -18,9 +18,9 @@ class TasksController
     public function index(Request $request)
     {
         $id = $request->brief_id;
-        $task = Briefs::find($id)->Tasks;
+        $task = Tasks::all();
 
-        return view("task.index",compact("task","id"));
+        return $task;
     }
 
     /**

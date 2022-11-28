@@ -13,9 +13,10 @@ class Tasks extends Model
     public $timestamps= false;
     protected $fillable = [
 
-        'Nom_de_la_tâche',
-        'Début_de_la_tâche',
-        'Fin_de_la_tâche',
+        'Nom_de_la_tache',
+        'Début_de_la_tache',
+        'Fin_de_la_tache',
+        'Description',
         'briefs_id'
     ];
 
