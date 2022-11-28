@@ -10,7 +10,8 @@ class Table extends React.Component{
     }
 
     componentDidMount(){
-        
+
+
         axios.get("http://127.0.0.1:8000/api/task")
         .then(res=>{
             this.setState({
@@ -25,7 +26,7 @@ class Table extends React.Component{
         })
     }
 
-    handleSubmit=(event)=>{
+    handleSubmit=()=>{
         // console.log('ff')
         axios.post('http://127.0.0.1:8000/api/task',this.state)
         .then((res)=>{
@@ -36,16 +37,17 @@ class Table extends React.Component{
     }
 
     handleDelete=(id)=>{
-        axios.delete('http://127.0.0.1:8000/api/task/delete/'+id)
-        .then(res=>{
+        axios.delete('http://127.0.0.1:8000/api/task/'+id)
+        .then((res)=>{
             alert('data has been deleted')
             window.location.reload(false)
         })
     }
 
     handleEdit=(id)=>{
-        axios.get('http://127.0.0.1:8000/api/task/'+id)
+        axios.get('http://127.0.0.1:8000/api/task/'+id+'/edit')
         .then(res=>{
+            console.log(res.data)
                 this.setState({
                     Nom_de_la_tache:res.data.Nom_de_la_tache,
                     id:res.data.id
@@ -63,7 +65,7 @@ class Table extends React.Component{
         }
         handleUpdate=(id)=>{
             console.log(id)
-            axios.put('http://127.0.0.1:8000/api/task/update/'+id,this.state)
+            axios.put('http://127.0.0.1:8000/api/task/'+id,this.state)
             .then((res)=>{
                 alert('data has been updated')
                 window.location.reload(false)

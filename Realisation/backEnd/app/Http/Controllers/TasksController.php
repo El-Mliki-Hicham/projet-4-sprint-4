@@ -6,6 +6,7 @@ use App\Models\Briefs;
 use App\Models\tasks;
 use Egulias\EmailValidator\Warning\TLD;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class TasksController
 {
@@ -17,40 +18,24 @@ class TasksController
 
     public function index(Request $request)
     {
-        $id = $request->brief_id;
-        $task = Tasks::all();
+          $task =Tasks::select('*',DB::raw("TIMESTAMPDIFF(HOUR,Debut_de_la_tache,Fin_de_la_tache) AS Period"))->get();
+        // $task = Tasks::all();
 
         return $task;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create(Request $request)
-    {
 
-        $id = $request->brief_id;
 
-        return view("task.create",compact("id"));
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $task = new Tasks();
-        $task->Nom_de_la_tâche = $request->task;
-        $task->Début_de_la_tâche= $request->date_debut;
-        $task->Fin_de_la_tâche= $request->date_fin ;
-        $task->briefs_id= $request->id_brief ;
+        $task->Nom_de_la_tache = $request->Nom_de_la_tache;
+        $task->Debut_de_la_tache= $request->Debut_de_la_tache;
+        $task->Fin_de_la_tache= $request->Fin_de_la_tache ;
+
         $task->save();
-        return redirect('brief/'.$request->id_brief.'/edit' );
+
 
     }
 
@@ -74,10 +59,8 @@ class TasksController
     public function edit($id)
     {
         $task = Tasks::find($id);
-        $brief_id = $task->briefs_id;
 
-
-        return view("task.edit",compact("task","brief_id"));
+        return $task;
     }
 
     /**
@@ -92,11 +75,11 @@ class TasksController
     {
 
         $task =Tasks::find($id);
-        $task->Nom_de_la_tâche = $request->task;
-        $task->Début_de_la_tâche= $request->date_debut;
-        $task->Fin_de_la_tâche= $request->date_fin ;
+        $task->Nom_de_la_tache = $request->Nom_de_la_tache;
+        $task->Debut_de_la_tache= $request->date_debut;
+        $task->Fin_de_la_tache= $request->date_fin ;
         $task->save();
-        return redirect('brief/'.$request->brief_id.'/edit' );
+
     }
 
     /**
@@ -111,6 +94,6 @@ class TasksController
         Tasks::find($id)
         ->delete();
 
-        return redirect('brief/'.$brief_id.'/edit' );
+
     }
 }

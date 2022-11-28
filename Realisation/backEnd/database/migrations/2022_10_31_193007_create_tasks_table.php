@@ -19,7 +19,7 @@ return new class extends Migration
             $table->timestamp("Debut_de_la_tache")->nullable();
             $table->timestamp("Fin_de_la_tache")->nullable();
             $table->string("Description")->nullable();
-            $table->unsignedInteger("briefs_id");
+            $table->unsignedInteger("briefs_id")->nullable();
             $table->foreign("briefs_id")
             ->references("id")
             ->on('briefs')

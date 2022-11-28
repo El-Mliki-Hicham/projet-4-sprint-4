@@ -14,7 +14,7 @@ class Tasks extends Model
     protected $fillable = [
 
         'Nom_de_la_tache',
-        'Début_de_la_tache',
+        'Debut_de_la_tache',
         'Fin_de_la_tache',
         'Description',
         'briefs_id'
