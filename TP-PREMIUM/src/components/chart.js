@@ -24,7 +24,7 @@ class Chart extends React.Component{
 
   
     render(){ 
-        console.log(this.props.DataTasks)
+        
         return(
             <div style={{width:700}}>
                 <Bar   data={this.state}/>

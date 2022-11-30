@@ -83,7 +83,7 @@ handleDelete=async(id)=>{
 
 
 render(){
-    console.log(this.state)
+    
 
     return(
         <div>
