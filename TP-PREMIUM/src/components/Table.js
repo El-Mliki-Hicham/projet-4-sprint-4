@@ -3,12 +3,17 @@ import axios from 'axios';
 
 class Table extends React.Component{
 
-    state={
+    constructor(props){
+        super(props)
+    this.state={
         Nom_de_la_tache:[],
         id:'',
         data:[],
     }
-
+}
+    shouldComponentUpdate() {
+        return true;
+      }
     componentDidMount(){
 
 
@@ -91,6 +96,8 @@ class Table extends React.Component{
                     <tr>
                         <th>id</th>
                         <th>Task</th>
+                        <th>debut date</th>
+                        <th>fin date</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -99,6 +106,8 @@ class Table extends React.Component{
                         <tr id='tr' key={task.id} >
                             <td>{task.id} </td>
                             <td >{task.Nom_de_la_tache} </td>
+                            <td >{task.Debut_de_la_tache} </td>
+                            <td >{task.Fin_de_la_tache} </td>
                             <td><button className="btn btn-danger" onClick={(()=>this.handleDelete(task.id))}>delete</button> </td>
                             <td><button className="btn btn-warning" onClick={(()=>this.handleEdit(task.id))}>Edit</button> </td>
                         </tr>

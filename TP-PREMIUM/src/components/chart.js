@@ -7,22 +7,27 @@ import { Chart as chartJs } from "chart.js/auto";
 
 
 class Chart extends React.Component{
-    state ={        
+
+
+    constructor(props) {
+        super(props);
+        this.state ={        
         labels:this.props.DataTasks.map((value)=>value.Nom_de_la_tache),
         datasets: [{   
             label:"durée de tâche (/h)", 
             data:this.props.DataTasks.map((value)=>value.Period),
-            backgroundColor:["blue"],  
+            backgroundColor:["orange"],  
               indexAxis: 'x',   
           }],
         }
+    }
 
-
+  
     render(){ 
         console.log(this.props.DataTasks)
         return(
-            <div  style={{width:700}}>
-                <Bar data={this.state}/>
+            <div style={{width:700}}>
+                <Bar   data={this.state}/>
             </div>
         )
     }}
