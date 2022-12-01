@@ -13,16 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('Apprenant_preparation_tache', function (Blueprint $table) {
+        Schema::create('Apprenant_preparation_brief', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger("Preparation_tache_id");
-            $table->unsignedInteger("Apprenant_id");
-            $table->foreign('Preparation_tache_id')->references('id')->on('Preparation_tache')->onDelete('cascade');
+            $table->string('Date_affectation')->nullable();
+            $table->unsignedInteger("Preparation_brief_id")->nullable();
+            $table->unsignedInteger("Apprenant_id")->nullable();
             $table->foreign('Apprenant_id')->references('id')->on('Apprenant')->onDelete('cascade');
-            $table->string('Etat')->default('en pouse');
-            $table->timestamp("date_debut")->nullable();
-            $table->timestamp("date_fin")->nullable();
+            $table->foreign('Preparation_brief_id')->references('id')->on('Preparation_brief')->onDelete('cascade');
         });
+
     }
 
     /**
@@ -32,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('students_task');
+        Schema::dropIfExists('briefs_students');
     }
 };
