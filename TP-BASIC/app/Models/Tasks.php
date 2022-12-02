@@ -12,6 +12,7 @@ class Tasks extends Model
     protected $fillable = [
 
         'Task',
+        "Date_debut","Date_fin"
 
     ];
 }

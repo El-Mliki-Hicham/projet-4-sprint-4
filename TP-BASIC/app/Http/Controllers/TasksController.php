@@ -12,8 +12,8 @@ class TasksController extends Controller
 
     public function index()
     {
-        // $tasks =Tasks::select(DB::raw("TIMESTAMPDIFF(HOUR,start_date, end_date) AS Period"),'Task.*')->get();
-        $tasks = Tasks::all();
+        $tasks =Tasks::select("*",DB::raw("TIMESTAMPDIFF(HOUR,Date_debut,Date_fin) AS Period"))->get();
+        // $tasks = Tasks::all();
         return  $tasks;
     }
 
