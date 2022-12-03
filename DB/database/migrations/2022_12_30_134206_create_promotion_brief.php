@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('Promotion_preparation_brief', function (Blueprint $table) {
+        Schema::create('Groupes_preparation_brief', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger("Preparation_brief_id")->nullable();
             $table->foreign("Preparation_brief_id")
@@ -21,10 +21,10 @@ return new class extends Migration
             ->on('Preparation_brief')
             ->onDelete('cascade');
 
-            $table->unsignedInteger("Promotion_id")->nullable();
-            $table->foreign("Promotion_id")
+            $table->unsignedInteger("Groupe_id")->nullable();
+            $table->foreign("Groupe_id")
             ->references("id")
-            ->on('Promotion')
+            ->on('Groupes')
             ->onDelete('cascade');
         });
     }

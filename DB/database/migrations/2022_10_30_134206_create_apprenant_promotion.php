@@ -13,12 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('Promotions_Apprenant', function (Blueprint $table) {
+        Schema::create('Groupes_apprenant', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger("promotion_id")->nullable();
-            $table->foreign("promotion_id")
+            $table->unsignedInteger("Groupe_id")->nullable();
+            $table->foreign("Groupe_id")
             ->references("id")
-            ->on('Promotions')
+            ->on('Groupes')
             ->onDelete('cascade');
 
             $table->unsignedInteger("Apprenant_id")->nullable();

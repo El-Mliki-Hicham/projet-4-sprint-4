@@ -13,9 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('Promotions', function (Blueprint $table) {
+        Schema::create('Groupes', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('Nom_promotion')->nullable();
+            $table->string('Nom_groupe')->nullable();
             $table->unsignedInteger("Annee_formation_id")->nullable();
             $table->foreign("Annee_formation_id")
                 ->references("id")
