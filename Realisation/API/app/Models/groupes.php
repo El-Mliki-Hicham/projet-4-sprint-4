@@ -2,6 +2,7 @@
 
 namespace App\Models;
 use App\Models\formateur;
+use App\Models\annee_formation;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -17,5 +18,8 @@ class groupes extends Model
 
     public function Formateur(){
         return $this->hasOne(formateur::class);
+       }
+    public function annee_formation(){
+        return $this->belongsTo(annee_formation::class);
        }
 }

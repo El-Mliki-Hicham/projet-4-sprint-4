@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AnneeFormationController;
 use App\Http\Controllers\FormateurController;
 use App\Http\Controllers\GroupesController;
 use Illuminate\Http\Request;
@@ -22,3 +23,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::resource('groupes', GroupesController::class);
 Route::resource('formateur', FormateurController::class);
+Route::resource('anne', AnneeFormationController::class);
