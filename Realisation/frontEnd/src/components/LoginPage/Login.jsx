@@ -45,8 +45,12 @@ function Login (){
        console.log(cookies.get('FormateurID'));
     
         navigate('/dashbord')
-    }else{SetMessage('Name or Email is not correct')}
-        })
+    }
+
+    else{
+        SetMessage('Name or Email is not correct')
+    }
+})
    }
    function HandleChange(e){
         SetEmail(EmailRef.current.value)
