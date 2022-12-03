@@ -17,9 +17,9 @@ return new class extends Migration
             $table->id();
             $table->unsignedInteger("Preparation_tache_id");
             $table->unsignedInteger("Apprenant_id");
-            $table->unsignedInteger("Apprenant_preparation_brief_id");
+            $table->unsignedInteger("Apprenant_Brief_id");
             $table->foreign('Preparation_tache_id')->references('id')->on('Preparation_tache')->onDelete('cascade');
-            $table->foreign('Apprenant_preparation_brief_id')->references('id')->on('Apprenant_preparation_brief')->onDelete('cascade');
+            $table->foreign('Apprenant_Brief_id')->references('id')->on('Apprenant_preparation_brief')->onDelete('cascade');
             $table->foreign('Apprenant_id')->references('id')->on('Apprenant')->onDelete('cascade');
             $table->string('Etat')->default('en pouse');
             $table->timestamp("date_debut")->nullable();
