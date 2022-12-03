@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Models;
-
+use App\Models\groupes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -20,5 +20,7 @@ class formateur extends Model
         "Image"
     ];
 
-
+    public function groupes(){
+        return $this->hasMany(groupes::class);
+       }
 }

@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Models;
-
+use App\Models\formateur;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -14,4 +14,8 @@ class groupes extends Model
         'Nom_groupe',
         "Logo"
     ];
+
+    public function Formateur(){
+        return $this->hasOne(formateur::class);
+       }
 }
