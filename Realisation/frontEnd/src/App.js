@@ -3,7 +3,9 @@ import './App.css';
 
 import React from 'react';
 import {BrowserRouter,Routes,Route} from 'react-router-dom';
-import Dashbord from './components/Dashbord';
+import Dashbord from './components/DashbordPage/Dashbord';
+import Login from './components/LoginPage/Login';
+
 
 
 class App extends React.Component {
@@ -17,7 +19,8 @@ render(){
 
       <BrowserRouter>
       <Routes>
-        <Route path='/' element={<Dashbord />}></Route>
+        <Route path='/dashbord' element={<Dashbord />}></Route>
+        <Route path='/login' element={<Login />}></Route>
     
       </Routes>
       </BrowserRouter>
