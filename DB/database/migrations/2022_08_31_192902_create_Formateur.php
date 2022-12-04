@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string("Nom_formateur")->nullable();
             $table->string("Prenom_formateur")->nullable();
             $table->string("Email_formateur")->nullable();
+            $table->decimal("Phone")->nullable();
             $table->string("Adress")->nullable();
             $table->string("CIN")->nullable();
             $table->string("Image")->nullable();
