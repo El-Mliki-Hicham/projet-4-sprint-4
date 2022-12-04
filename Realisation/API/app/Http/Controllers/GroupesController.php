@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\apprenant_preparation_brief;
+use App\Models\apprenant_preparation_tach;
 use App\Models\formateur;
 use App\Models\groupes;
 use App\Models\groupes_apprenant;
@@ -54,6 +56,19 @@ class GroupesController extends Controller
 
 
         return [$Groupes,$CountAppenants] ;
+    }
+
+         function ApprenantBrief($id){
+            $ApprenantBrief= apprenant_preparation_tach::select('apprenant.*',"apprenant.id as idGroup","Etat",'preparation_tache.*',"apprenant_preparation_brief.*","preparation_brief.*")
+            ->join('apprenant', 'apprenant_preparation_tache.Apprenant_id', '=','apprenant.id')
+            ->join('preparation_tache', 'apprenant_preparation_tache.Preparation_tache_id', '=','preparation_tache.id')
+            ->join('apprenant_preparation_brief', 'apprenant_preparation_tache.Apprenant_P_Brief_id', '=','apprenant_preparation_brief.id')
+            ->join('preparation_brief', 'apprenant_preparation_brief.Preparation_brief_id', '=','preparation_brief.id')
+            ->where('Formateur_id',$id)
+            ->get()
+            ;
+            dd($ApprenantBrief);
+            return $ApprenantBrief;
     }
 
 }

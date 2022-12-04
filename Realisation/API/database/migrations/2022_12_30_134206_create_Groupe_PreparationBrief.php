@@ -15,10 +15,10 @@ return new class extends Migration
     {
         Schema::create('Groupes_preparation_brief', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger("Preparation_brief_id")->nullable();
-            $table->foreign("Preparation_brief_id")
+            $table->unsignedInteger("Apprenant_preparation_brief_id")->nullable();
+            $table->foreign("Apprenant_preparation_brief_id")
             ->references("id")
-            ->on('Preparation_brief')
+            ->on('Apprenant_preparation_brief')
             ->onDelete('cascade');
 
             $table->unsignedInteger("Groupe_id")->nullable();

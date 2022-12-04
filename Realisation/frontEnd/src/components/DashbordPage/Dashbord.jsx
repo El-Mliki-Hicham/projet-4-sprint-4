@@ -6,6 +6,7 @@ function Dashbord() {
     const [DataGroupes, setDataGroupes] = useState([]);
     const [OneGroupe, setOneGroupe] = useState([]);
     const [NumberApprenant, setNumberApprenant] = useState([]);
+    const [IdGroupe, setIdGroupe] = useState([]);
     const cookies = new Cookies();
 
     useEffect(() => {
@@ -29,7 +30,8 @@ function Dashbord() {
         .then(res=>{
             setOneGroupe(res.data[0])
             setNumberApprenant(res.data[1])
-          
+            setIdGroupe(res.data[0].idGroupe)
+        //   console.log(res.data[0].idGroupe)
             // setIdGroupe({id:res.data.id})
             
           
@@ -62,7 +64,10 @@ function Dashbord() {
             {OneGroupe.Nom_groupe}
             <br />
              numbre des apprenants: {NumberApprenant}
-           
+           <div style={{border:"23"}}>
+            {IdGroupe}
+
+           </div>
         </div>
     )
 }

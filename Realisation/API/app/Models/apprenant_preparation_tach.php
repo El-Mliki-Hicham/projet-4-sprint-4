@@ -13,6 +13,7 @@ class apprenant_preparation_tach extends Model
     protected $fillable = [
         'Etat',
         "date_debut",
-        "date_fin"
+        "date_fin",
+        'Apprenant_id'
     ];
 }
