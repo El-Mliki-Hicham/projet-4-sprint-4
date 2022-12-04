@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AnneeFormationController;
+use App\Http\Controllers\ApprenantController;
 use App\Http\Controllers\FormateurController;
 use App\Http\Controllers\GroupesController;
 use Illuminate\Http\Request;
@@ -22,5 +23,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::resource('groupes', GroupesController::class);
+Route::get('AllGroupes/{id}', [GroupesController::class,'showAllGroupes'])->name('AllGroupes');
+Route::get('OneGroupe/{id}', [GroupesController::class,'OneGroupe'])->name('OneGroupe');
+Route::get('ApprenantsCount/{id}', [ApprenantController::class,'ApprenantsCount'])->name('ApprenantsCount');
 Route::resource('formateur', FormateurController::class);
 Route::resource('anne', AnneeFormationController::class);

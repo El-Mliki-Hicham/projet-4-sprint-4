@@ -20,7 +20,7 @@ render(){
       <BrowserRouter>
       <Routes>
         <Route path='/dashbord' element={<Dashbord />}></Route>
-        <Route path='/login' element={<Login />}></Route>
+        <Route path='/' element={<Login />}></Route>
     
       </Routes>
       </BrowserRouter>

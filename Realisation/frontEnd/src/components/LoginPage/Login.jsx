@@ -25,7 +25,7 @@ function Login (){
         const fetchData = async () => {
        await axios.get("http://localhost:8000/api/formateur")
        .then(res=>{
-           console.log(res.data)
+          
            SetData(res.data)
        })
         }
