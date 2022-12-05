@@ -5,6 +5,7 @@ import axios from "axios";
 function Dashbord() {
     const [DataGroupes, setDataGroupes] = useState([]);
     const [OneGroupe, setOneGroupe] = useState([]);
+    const [Apprenants, setApprenants] = useState([]);
     const [NumberApprenant, setNumberApprenant] = useState([]);
     const [IdGroupe, setIdGroupe] = useState([]);
     const cookies = new Cookies();
@@ -30,16 +31,17 @@ function Dashbord() {
         .then(res=>{
             setOneGroupe(res.data[0])
             setNumberApprenant(res.data[1])
-            
+            setApprenants(res.data[2])
+            // console.log(res.data)
             cookies.set('GroupeID', res.data[0].idGroupe)
-        //   console.log(res.data[0].idGroupe)
-            // setIdGroupe({id:res.data.id})
             })
 
     
     }
     OneGroupe()
- setIdGroupe(cookies.get('GroupeID'))
+     setIdGroupe(cookies.get('GroupeID'))
+
+    //  api Avoncement apprenants
     const AvoncementApprenant = async () => {
         console.log(IdGroupe)
         await axios.get("http://localhost:8000/api/ApprenantBrief/"+idFormateur+'/'+cookies.get('GroupeID'))
@@ -79,6 +81,9 @@ function Dashbord() {
             id groupe : {IdGroupe}
             <br />
             Etat d'avoncement : <br />
+            {Apprenants.map((apprenant)=>
+            <li key={apprenant.id}>{apprenant.Nom} {apprenant.Prenom} </li>
+            )}
 
            </div>
         </div>

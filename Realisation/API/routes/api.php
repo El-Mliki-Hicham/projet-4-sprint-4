@@ -26,6 +26,7 @@ Route::resource('groupes', GroupesController::class);
 Route::get('AllGroupes/{id}', [GroupesController::class,'showAllGroupes'])->name('AllGroupes');
 Route::get('OneGroupe/{id}', [GroupesController::class,'OneGroupe'])->name('OneGroupe');
 Route::get('ApprenantBrief/{idF}/{idG}', [GroupesController::class,'ApprenantBrief'])->name('ApprenantBrief');
+Route::get('Av_ApprenantTache/{idF}/{idG}/{idA}', [GroupesController::class,'Av_ApprenantTache'])->name('Av_ApprenantTache');
 Route::get('ApprenantsCount/{id}', [ApprenantController::class,'ApprenantsCount'])->name('ApprenantsCount');
 Route::resource('formateur', FormateurController::class);
 Route::resource('anne', AnneeFormationController::class);
