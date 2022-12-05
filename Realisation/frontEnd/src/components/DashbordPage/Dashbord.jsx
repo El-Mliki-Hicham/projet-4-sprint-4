@@ -30,14 +30,25 @@ function Dashbord() {
         .then(res=>{
             setOneGroupe(res.data[0])
             setNumberApprenant(res.data[1])
-            setIdGroupe(res.data[0].idGroupe)
+            
+            cookies.set('GroupeID', res.data[0].idGroupe)
         //   console.log(res.data[0].idGroupe)
             // setIdGroupe({id:res.data.id})
-            
-          
-        })
+            })
+
+    
     }
     OneGroupe()
+ setIdGroupe(cookies.get('GroupeID'))
+    const AvoncementApprenant = async () => {
+        console.log(IdGroupe)
+        await axios.get("http://localhost:8000/api/ApprenantBrief/"+idFormateur+'/'+cookies.get('GroupeID'))
+       .then(res=>{
+        //    setDataGrous(res.data)
+           console.log(res.data)
+       })
+   }
+   AvoncementApprenant()
 
     }, []);
 
@@ -65,7 +76,9 @@ function Dashbord() {
             <br />
              numbre des apprenants: {NumberApprenant}
            <div style={{border:"23"}}>
-            {IdGroupe}
+            id groupe : {IdGroupe}
+            <br />
+            Etat d'avoncement : <br />
 
            </div>
         </div>

@@ -24,6 +24,7 @@ class GroupesController extends Controller
         $Groupes = groupes::select("*")->where('Formateur_id',$id)
         ->join('formateur', 'groupes.Formateur_id', '=', 'formateur.id')
         ->join('annee_formation', 'groupes.Annee_formation_id', '=', 'annee_formation.id')
+        ->orderBy('annee_formation.id','desc')
         ->get();
         return $Groupes ;
     }
@@ -32,6 +33,7 @@ class GroupesController extends Controller
         $Groupes = groupes::select("*")->where('groupes.id',$id)
         ->join('formateur', 'groupes.Formateur_id', '=', 'formateur.id')
         ->join('annee_formation', 'groupes.Annee_formation_id', '=', 'annee_formation.id')
+        ->orderBy('annee_formation.id','desc')
         ->get();
         return $Groupes ;
     }
@@ -40,6 +42,7 @@ class GroupesController extends Controller
         $Groupes = groupes::select("*","groupes.id as idGroupe")->where('Formateur_id',$id)
         ->join('formateur', 'groupes.Formateur_id', '=', 'formateur.id')
         ->join('annee_formation', 'groupes.Annee_formation_id', '=', 'annee_formation.id')
+        ->orderBy('annee_formation.id', 'desc')
         ->first();
 
 
@@ -58,17 +61,29 @@ class GroupesController extends Controller
         return [$Groupes,$CountAppenants] ;
     }
 
-         function ApprenantBrief($id){
-            $ApprenantBrief= apprenant_preparation_tach::select('apprenant.*',"apprenant.id as idGroup","Etat",'preparation_tache.*',"apprenant_preparation_brief.*","preparation_brief.*")
+         function ApprenantBrief($idF,$idG){
+            $ApprenantBrief= apprenant_preparation_tach::select(
+                'apprenant.*',
+                "groupes_preparation_brief.Groupe_id",
+                "preparation_brief.Description as Description_brief","preparation_brief.Nom_du_brief",'preparation_brief.Duree as Duree_biref',
+                "preparation_tache.Nom_tache","preparation_tache.Description as Description_tache","preparation_tache.Duree as Duree_tache",
+                "apprenant_preparation_tache.*",
+                "apprenant_preparation_brief.Date_affectation"
+                )
             ->join('apprenant', 'apprenant_preparation_tache.Apprenant_id', '=','apprenant.id')
             ->join('preparation_tache', 'apprenant_preparation_tache.Preparation_tache_id', '=','preparation_tache.id')
             ->join('apprenant_preparation_brief', 'apprenant_preparation_tache.Apprenant_P_Brief_id', '=','apprenant_preparation_brief.id')
             ->join('preparation_brief', 'apprenant_preparation_brief.Preparation_brief_id', '=','preparation_brief.id')
-            ->where('Formateur_id',$id)
+            ->join('groupes_preparation_brief','apprenant_preparation_brief.id','=','groupes_preparation_brief.Apprenant_preparation_brief_id')
+            ->where([
+                ['Formateur_id',$idF],
+                ['groupes_preparation_brief.Groupe_id',$idG]
+            ])
             ->get()
             ;
-            dd($ApprenantBrief);
+            // dd($ApprenantBrief);
             return $ApprenantBrief;
     }
+
 
 }
