@@ -178,7 +178,7 @@ class GroupesController extends Controller
 
                  //calculation
                   $result =   100 / $CountToutalTaches ;
-                $avancementApp = $result *$ToutalTacheTerminer .'%';
+                $avancementApp = $result *$ToutalTacheTerminer ;
 
 
 
