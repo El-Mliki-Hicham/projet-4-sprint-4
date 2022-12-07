@@ -94,7 +94,41 @@ class GroupesController extends Controller
             // dd($ApprenantBrief);
             return $ApprenantBrief;
     }
-         function Av_ApprenantTache($idF,$idG,$idA){
+
+
+         function Av_ApprenantTache($idF,$idG,$idA,$idB){
+
+
+
+                 //listBrief des apprenant
+                 $listBrief= apprenant_preparation_tach::select(
+
+                    "preparation_brief.Nom_du_brief",
+
+
+                    )
+                    ->join('apprenant', 'apprenant_preparation_tache.Apprenant_id', '=','apprenant.id')
+                    ->join('preparation_tache', 'apprenant_preparation_tache.Preparation_tache_id', '=','preparation_tache.id')
+                    ->join('apprenant_preparation_brief', 'apprenant_preparation_tache.Apprenant_P_Brief_id', '=','apprenant_preparation_brief.id')
+                    ->join('preparation_brief', 'apprenant_preparation_brief.Preparation_brief_id', '=','preparation_brief.id')
+                    ->join('groupes_preparation_brief','apprenant_preparation_brief.id','=','groupes_preparation_brief.Apprenant_preparation_brief_id')
+                    ->where([
+
+                        ['groupes_preparation_brief.Groupe_id',$idG],
+                        ['apprenant.id',$idA],
+
+
+                        ])
+                    ->groupBy("Nom_du_brief")
+                        ->get();
+                        // ->selectRaw('');
+
+
+                // dd($listBrief);
+
+
+
+             //numbre des tache
             $CountToutalTaches= apprenant_preparation_tach::select(
 
                 "preparation_tache.Nom_tache",
@@ -109,38 +143,49 @@ class GroupesController extends Controller
             ->where([
                 ['Formateur_id',$idF],
                 ['groupes_preparation_brief.Groupe_id',$idG],
-                ['apprenant.id',$idA]
+                ['apprenant.id',$idA],
+                ['preparation_brief.id',$idB]
             ])
             ->count()
             ;
+            // dd($CountToutalTaches);
+
+
+                 //numbre des tache terminer
             $ToutalTacheTerminer= apprenant_preparation_tach::select(
 
                 "preparation_tache.Nom_tache",
                 "apprenant_preparation_tache.Etat",
 
                 )
-            ->join('apprenant', 'apprenant_preparation_tache.Apprenant_id', '=','apprenant.id')
-            ->join('preparation_tache', 'apprenant_preparation_tache.Preparation_tache_id', '=','preparation_tache.id')
-            ->join('apprenant_preparation_brief', 'apprenant_preparation_tache.Apprenant_P_Brief_id', '=','apprenant_preparation_brief.id')
-            ->join('preparation_brief', 'apprenant_preparation_brief.Preparation_brief_id', '=','preparation_brief.id')
-            ->join('groupes_preparation_brief','apprenant_preparation_brief.id','=','groupes_preparation_brief.Apprenant_preparation_brief_id')
-            ->where([
-                ['Formateur_id',$idF],
-                ['groupes_preparation_brief.Groupe_id',$idG],
-                ['apprenant.id',$idA],
-                ['Etat',"terminer"]
-            ])
-            ->count();
+                ->join('apprenant', 'apprenant_preparation_tache.Apprenant_id', '=','apprenant.id')
+                ->join('preparation_tache', 'apprenant_preparation_tache.Preparation_tache_id', '=','preparation_tache.id')
+                ->join('apprenant_preparation_brief', 'apprenant_preparation_tache.Apprenant_P_Brief_id', '=','apprenant_preparation_brief.id')
+                ->join('preparation_brief', 'apprenant_preparation_brief.Preparation_brief_id', '=','preparation_brief.id')
+                ->join('groupes_preparation_brief','apprenant_preparation_brief.id','=','groupes_preparation_brief.Apprenant_preparation_brief_id')
+                ->where([
+                    ['Formateur_id',$idF],
+                    ['groupes_preparation_brief.Groupe_id',$idG],
+                    ['apprenant.id',$idA],
+                    ['preparation_brief.id',$idB],
+                    ['Etat',"terminer"]
+                    ])
+                    ->count();
+                    // ->selectRaw('');
 
+
+            // dd($ToutalTacheTerminer);
+
+                 //calculation
                   $result =   100 / $CountToutalTaches ;
-                $avancementApp = $result *$ToutalTacheTerminer;
+                $avancementApp = $result *$ToutalTacheTerminer .'%';
 
 
 
 
 
             // dd($ApprenantBrief);
-            return $avancementApp;
+            return [$avancementApp,$listBrief];
     }
 
 
