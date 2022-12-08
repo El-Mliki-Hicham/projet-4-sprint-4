@@ -1,16 +1,38 @@
-import React from "react";
+import QuickChart from 'quickchart-js';
+import React from 'react';
 import Cookies from "universal-cookie";
 import { useEffect,useState } from "react";
 import axios from "axios";
+import ChartBar from './chart';
+import ChartBar2 from './ChartBar';
 function Dashbord() {
+
+
+
+    
+    
+    
+    
+    
     const [DataGroupes, setDataGroupes] = useState([]);
+    const [Porsontage, setPorsontage] = useState([]);
     const [OneGroupe, setOneGroupe] = useState([]);
     const [Apprenants, setApprenants] = useState([]);
     const [NumberApprenant, setNumberApprenant] = useState([]);
     const [IdGroupe, setIdGroupe] = useState([]);
     const cookies = new Cookies();
 
+
+
+
+
+
+
+
+
+
     useEffect(() => {
+        
         let idFormateur =  cookies.get('FormateurID')
        
         
@@ -32,7 +54,6 @@ function Dashbord() {
             setOneGroupe(res.data[0])
             setNumberApprenant(res.data[1])
             setApprenants(res.data[2])
-            // console.log(res.data)
             cookies.set('GroupeID', res.data[0].idGroupe)
             })
 
@@ -42,15 +63,16 @@ function Dashbord() {
      setIdGroupe(cookies.get('GroupeID'))
 
     //  api Avoncement apprenants
-    const AvoncementApprenant = async () => {
-        console.log(IdGroupe)
-        await axios.get("http://localhost:8000/api/ApprenantBrief/"+idFormateur+'/'+cookies.get('GroupeID'))
-       .then(res=>{
-        //    setDataGrous(res.data)
-           console.log(res.data)
-       })
-   }
-   AvoncementApprenant()
+    
+//     const AvoncementApprenant = async () => {
+//         console.log(IdGroupe)
+//         await axios.get("http://localhost:8000/api/Av_ApprenantTache/"+idFormateur+'/'+cookies.get('GroupeID')+"/1/1")
+//        .then(res=>{
+//         //    setDataGrous(res.data)
+//         //    console.log(res.data)
+//        })
+//    }
+//    AvoncementApprenant()
 
     }, []);
 
@@ -59,11 +81,8 @@ function Dashbord() {
     let idGroupe = e.target.value 
     axios.get("http://localhost:8000/api/groupes/"+ idGroupe)
     .then(res=>{
-       
         console.log(res.data)
-    })
-    
-        
+    })   
     }
 
     return(
@@ -82,9 +101,10 @@ function Dashbord() {
             <br />
             Etat d'avoncement : <br />
             {Apprenants.map((apprenant)=>
-            <li key={apprenant.id}>{apprenant.Nom} {apprenant.Prenom} </li>
-            )}
-
+           
+           <li key={apprenant.id}>{apprenant.Nom} {apprenant.Prenom} </li>
+           )}
+           {/* <ChartBar2 dataApp={Apprenants} /> */}
            </div>
         </div>
     )
