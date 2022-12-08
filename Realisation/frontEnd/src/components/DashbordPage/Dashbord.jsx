@@ -26,7 +26,7 @@ function Dashbord() {
             await axios.get("http://localhost:8000/api/AllGroupes/" + idFormateur)
                 .then(res => {
                     setDataGroupes(res.data)
-                    // console.log(res.data)
+                    console.log(res.data)
                 })
         }
         DataGroupes()
@@ -38,6 +38,7 @@ function Dashbord() {
                     setOneGroupe(res.data[0])
                     setNumberApprenant(res.data[1])
                     setApprenants(res.data[2])
+                    setPourcentage(res.data[3])
                     console.log(res.data)
 
                     cookies.set('GroupeID', res.data[0].idGroupe)

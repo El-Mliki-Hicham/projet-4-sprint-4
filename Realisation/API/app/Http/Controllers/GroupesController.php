@@ -78,7 +78,59 @@ class GroupesController extends Controller
         ->get();
 
 
-        return [$Groupes,$CountAppenants,$GetAppenants] ;
+   //numbre des tache
+   $CountToutalTaches= apprenant_preparation_tach::select(
+
+    "preparation_tache.Nom_tache",
+    "apprenant_preparation_tache.Etat",
+
+    )
+->join('apprenant', 'apprenant_preparation_tache.Apprenant_id', '=','apprenant.id')
+->join('preparation_tache', 'apprenant_preparation_tache.Preparation_tache_id', '=','preparation_tache.id')
+->join('apprenant_preparation_brief', 'apprenant_preparation_tache.Apprenant_P_Brief_id', '=','apprenant_preparation_brief.id')
+->join('preparation_brief', 'apprenant_preparation_brief.Preparation_brief_id', '=','preparation_brief.id')
+->join('groupes_preparation_brief','apprenant_preparation_brief.id','=','groupes_preparation_brief.Apprenant_preparation_brief_id')
+->where([
+
+    ['groupes_preparation_brief.Groupe_id',$Groupes->idGroupe]
+])
+->count()
+;
+// dd($CountToutalTaches);
+
+
+
+
+$ToutalTacheTerminer= apprenant_preparation_tach::select(
+
+    "preparation_tache.Nom_tache",
+    "apprenant_preparation_tache.Etat",
+
+    )
+    ->join('apprenant', 'apprenant_preparation_tache.Apprenant_id', '=','apprenant.id')
+    ->join('preparation_tache', 'apprenant_preparation_tache.Preparation_tache_id', '=','preparation_tache.id')
+    ->join('apprenant_preparation_brief', 'apprenant_preparation_tache.Apprenant_P_Brief_id', '=','apprenant_preparation_brief.id')
+    ->join('preparation_brief', 'apprenant_preparation_brief.Preparation_brief_id', '=','preparation_brief.id')
+    ->join('groupes_preparation_brief','apprenant_preparation_brief.id','=','groupes_preparation_brief.Apprenant_preparation_brief_id')
+    ->where([
+
+        ['groupes_preparation_brief.Groupe_id',$Groupes->idGroupe],
+        ['Etat',"terminer"]
+        ])
+        ->count();
+        // ->selectRaw('');
+
+
+
+        //calculation
+        $result =   100 / $CountToutalTaches ;
+        $avancementApp = $result *$ToutalTacheTerminer ;
+
+
+        // dd($avancementApp);
+
+
+        return [$Groupes,$CountAppenants,$GetAppenants,$avancementApp] ;
     }
 
          function ApprenantBrief($idF,$idG){
