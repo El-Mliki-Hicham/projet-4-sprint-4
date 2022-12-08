@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::get('AvancementGroups/{id}', [GroupesController::class,'AvancementGroups'])->name('AvancementGroups');
 
 Route::resource('groupes', GroupesController::class);
 Route::get('AllGroupes/{id}', [GroupesController::class,'showAllGroupes'])->name('AllGroupes');
