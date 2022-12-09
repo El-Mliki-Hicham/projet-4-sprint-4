@@ -122,10 +122,13 @@ $ToutalTacheTerminer= apprenant_preparation_tach::select(
 
 
 
-        //calculation
-        $result =   100 / $CountToutalTaches ;
-        $avancementApp = $result *$ToutalTacheTerminer ;
+        if($CountToutalTaches == 0){
 
+            $avancementApp= 0;
+        }else{
+            $result =   100 / $CountToutalTaches ;
+            $avancementApp = $result *$ToutalTacheTerminer ;
+        }
 
         // dd($avancementApp);
 
