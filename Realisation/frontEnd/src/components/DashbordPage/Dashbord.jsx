@@ -58,12 +58,13 @@ function Dashbord() {
                 setOneGroupe(res.data[0][0])
                 setNumberApprenant(res.data[1])
                 setAllBriefs(res.data[2])
+                console.log(res.data)
             })
 
             //Avancement groupe after select data
         axios.get("http://localhost:8000/api/AvancementGroups/" + idGroupe)
             .then(res => {
-                setPourcentage(res.data)
+                setPourcentage(res.data.toFixed(0))
                 
                   
             })

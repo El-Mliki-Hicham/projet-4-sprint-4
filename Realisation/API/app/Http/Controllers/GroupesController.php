@@ -56,8 +56,9 @@ class GroupesController extends Controller
         $listBrief= apprenant_preparation_tach::select(
 
             "preparation_brief.Nom_du_brief",'preparation_brief.id as id' ,
-            DB::raw('100 / count("apprenant_preparation_tache.Etat")  as totalTaches'),
-            DB::raw("count(CASE Etat WHEN 'terminer' THEN 1 ELSE NULL END) as TachesTerminer" ),
+            // DB::raw('100 / count("apprenant_preparation_tache.Etat")  as totalTaches'),
+            DB::raw(" 100 / count('apprenant_preparation_tache.Etat')   * count(CASE Etat WHEN 'terminer' THEN 1 ELSE NULL END) as Percentage"),
+            // DB::raw("count(CASE Etat WHEN 'terminer' THEN 1 ELSE NULL END) as TachesTerminer" ),
             // DB::selectRaw("totalTaches * TerminerTaches" ),
             // DB::raw('100 * 12' ),
 
@@ -70,6 +71,7 @@ class GroupesController extends Controller
 
             ->where([
                 ['groupes_preparation_brief.Groupe_id',$id],
+                // ['Etat',"terminer"],
                 ])
 
             ->groupBy("Nom_du_brief")
@@ -79,7 +81,7 @@ class GroupesController extends Controller
                 //     $result= $value->totalTaches * $value->TerminerTaches;
                 // }
 
-                 // dd($listBrief);
+                 dd($listBrief);
                  return [$Groupes,$CountAppenants,$listBrief] ;
     }
 
