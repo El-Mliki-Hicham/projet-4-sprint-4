@@ -62,7 +62,7 @@ function Login (){
     return(
         <div>
              Nom<input  onChange={HandleChange}  id="name" ref={NomRef} type="text"  /><br></br>
-            Email<input  onChange={HandleChange}   id="name" ref={EmailRef} type="text" /> <br></br>
+            Email<input  onChange={HandleChange}   id="name" ref={EmailRef} type="email" /> <br></br>
              <button   onClick={handleClick}>login</button>
              {Message}
         </div>

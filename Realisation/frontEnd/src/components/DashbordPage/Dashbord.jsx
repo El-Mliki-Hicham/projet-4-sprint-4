@@ -11,6 +11,7 @@ function Dashbord() {
     const [DataGroupes, setDataGroupes] = useState([]);
     const [Pourcentage, setPourcentage] = useState([]);
     const [chartImage, setChartImage] = useState();
+    const [AllBriefs,setAllBriefs] = useState([]);
     const [OneGroupe, setOneGroupe] = useState([]);
     const [Apprenants, setApprenants] = useState([]);
     const [NumberApprenant, setNumberApprenant] = useState([]);
@@ -26,7 +27,7 @@ function Dashbord() {
             await axios.get("http://localhost:8000/api/AllGroupes/" + idFormateur)
                 .then(res => {
                     setDataGroupes(res.data)
-                    console.log(res.data)
+                    // console.log(res.data)
                 })
         }
         DataGroupes()
@@ -38,8 +39,9 @@ function Dashbord() {
                     setOneGroupe(res.data[0])
                     setNumberApprenant(res.data[1])
                     setApprenants(res.data[2])
-                    setPourcentage(res.data[3])
-                    console.log(res.data)
+                    setPourcentage(res.data[3].toFixed(0))
+                    setAllBriefs(res.data[4])
+                    // console.log(res.data)
 
                     cookies.set('GroupeID', res.data[0].idGroupe)
                 })
@@ -55,11 +57,14 @@ function Dashbord() {
             .then(res => {
                 setOneGroupe(res.data[0][0])
                 setNumberApprenant(res.data[1])
-
+                setAllBriefs(res.data[2])
             })
+
+            //Avancement groupe after select data
         axios.get("http://localhost:8000/api/AvancementGroups/" + idGroupe)
             .then(res => {
                 setPourcentage(res.data)
+                
                   
             })
             
@@ -134,14 +139,20 @@ return(
                     </div>
                 </div>
                     <br />
-                         <div class="row">
-                         <div class="col-6 border border-dark ">
+                         <div className="row">
+                         <div className="col-6 border border-dark ">
                             <h2>Etat d' avancement du groupe:</h2>
                             <img style={{width:300}} src={chartImagee}></img>
                         </div>
                    
                         
-                        <div class="col border border-dark">Column</div>
+                        <div className="col-6 border border-dark">Column</div>
+                        <div className="col-6 border border-dark">
+                            <h2>Etat d'avencement de brief :</h2>
+                            {AllBriefs.map((value)=>
+                            <li key={value.id}>{value.Nom_du_brief}</li>
+                            )}
+                        </div>
                        
                  </div>
             </div>
