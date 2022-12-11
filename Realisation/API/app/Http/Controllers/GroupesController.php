@@ -81,7 +81,7 @@ class GroupesController extends Controller
                 //     $result= $value->totalTaches * $value->TerminerTaches;
                 // }
 
-                 dd($listBrief);
+                //  dd($listBrief);
                  return [$Groupes,$CountAppenants,$listBrief] ;
     }
 
@@ -195,10 +195,39 @@ $ToutalTacheTerminer= apprenant_preparation_tach::select(
                     // ->selectRaw('preparation_brief.id as id')
                         ->get();
 
-        return [$Groupes,$CountAppenants,$GetAppenants,$avancementApp,$listBrief] ;
+        return [$Groupes,$CountAppenants,$GetAppenants,$avancementApp,$listBrief];
     }
+        function ListApprenant($id){
 
-    //      function ApprenantBrief($idF,$idG){
+
+                $groupeId = groupes_apprenant::select("groupes.id")
+                ->join('groupes', 'groupes_apprenant.Groupe_id', '=','groupes.id')
+                ->join('apprenant', 'groupes_apprenant.Apprenant_id', '=','apprenant.id')
+                ->join('annee_formation', 'groupes.Annee_formation_id', '=', 'annee_formation.id')
+
+                ->orderBy('annee_formation.id', 'desc')
+                ->where("Formateur_id",$id)
+                 ->first();
+
+
+                $ListApprentant = groupes_apprenant::select("apprenant.*",'groupes.*')
+                ->join('groupes', 'groupes_apprenant.Groupe_id', '=','groupes.id')
+                ->join('apprenant', 'groupes_apprenant.Apprenant_id', '=','apprenant.id')
+                ->join('annee_formation', 'groupes.Annee_formation_id', '=', 'annee_formation.id')
+
+                ->orderBy('annee_formation.id', 'desc')
+                ->where([
+                    ["Formateur_id",$id],
+                    ["Groupe_id",$groupeId->id]
+                ])
+                 ->get();
+                    // dd($ListApprentant);
+
+
+
+                return [$ListApprentant,$groupeId];
+            }
+    //      function ApprenantBrief($idG){
     //         $ApprenantBrief= apprenant_preparation_tach::select(
     //             'apprenant.*',
     //             "groupes_preparation_brief.Groupe_id",
@@ -213,12 +242,12 @@ $ToutalTacheTerminer= apprenant_preparation_tach::select(
     //         ->join('preparation_brief', 'apprenant_preparation_brief.Preparation_brief_id', '=','preparation_brief.id')
     //         ->join('groupes_preparation_brief','apprenant_preparation_brief.id','=','groupes_preparation_brief.Apprenant_preparation_brief_id')
     //         ->where([
-    //             ['Formateur_id',$idF],
+
     //             ['groupes_preparation_brief.Groupe_id',$idG]
     //         ])
     //         ->get()
     //         ;
-    //         // dd($ApprenantBrief);
+    //         dd($ApprenantBrief);
     //         return $ApprenantBrief;
     // }
 
