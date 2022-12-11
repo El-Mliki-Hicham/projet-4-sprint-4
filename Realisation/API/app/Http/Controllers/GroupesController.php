@@ -81,7 +81,7 @@ class GroupesController extends Controller
                 //     $result= $value->totalTaches * $value->TerminerTaches;
                 // }
 
-                 dd($listBrief);
+                //  dd($listBrief);
                  return [$Groupes,$CountAppenants,$listBrief] ;
     }
 

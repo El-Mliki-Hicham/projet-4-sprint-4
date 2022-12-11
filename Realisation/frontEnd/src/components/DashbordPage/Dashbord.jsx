@@ -69,39 +69,70 @@ function Dashbord() {
                   
             })
             
-            }
-            const myChart = new QuickChart();
-           
-            myChart.setConfig({
-
-
-
-                type: 'progressBar',
-                data: {
-                  datasets: [
-                    {
-                      data: [Pourcentage],
-                    },
-                  ],
-                },
-                options: {
-                  plugins: {
-                    datalabels: {
-                      font: {
-                        size: 30,
-                      },
-                      color: (context) => context.dataset.data[context.dataIndex] > 15? '#fff' : '#000',
-                      anchor: (context) => context.dataset.data[context.dataIndex] > 15 ? 'center' : 'end',
-                      align: (context) => context.dataset.data[context.dataIndex] > 15 ? 'center' : 'right',
-                    },
-                  },
-                },
-              
-            });
-            
-            const chartImagee = myChart.getUrl();    
+        }
+        const myChart = new QuickChart();
+       
+        myChart.setConfig({
     
-return(
+    
+    
+            type: 'progressBar',
+            data: {
+              datasets: [
+                {
+                  data: [Pourcentage],
+                },
+              ],
+            },
+            options: {
+              plugins: {
+                datalabels: {
+                  font: {
+                    size: 30,
+                  },
+                  color: (context) => context.dataset.data[context.dataIndex] > 15? '#fff' : '#000',
+                  anchor: (context) => context.dataset.data[context.dataIndex] > 15 ? 'center' : 'end',
+                  align: (context) => context.dataset.data[context.dataIndex] > 15 ? 'center' : 'right',
+                },
+              },
+            },
+          
+        });
+        
+            const chartImagee = myChart.getUrl();    
+            // 
+        const ChartBrifes = new QuickChart();
+       
+        ChartBrifes.setConfig({
+    
+    
+    
+            type: 'progressBar',
+            data: {
+              datasets: [
+                {
+                  data: AllBriefs.map((value)=>value.Percentage),
+                },
+              ],
+            },
+            options: {
+              plugins: {
+                datalabels: {
+                  font: {
+                    size: 30,
+                  },
+                  color: (context) => context.dataset.data[context.dataIndex] > 15? '#fff' : '#000',
+                  anchor: (context) => context.dataset.data[context.dataIndex] > 15 ? 'center' : 'end',
+                  align: (context) => context.dataset.data[context.dataIndex] > 15 ? 'center' : 'right',
+                },
+              },
+            },
+          
+        });
+        
+            const BriefImage = ChartBrifes.getUrl();    
+            
+            return(
     <div>
         <div className="container">
             <div className="row">
@@ -153,6 +184,7 @@ return(
                             {AllBriefs.map((value)=>
                             <li key={value.id}>{value.Nom_du_brief}</li>
                             )}
+                            <img style={{width:300}} src={BriefImage}></img>
                         </div>
                        
                  </div>
