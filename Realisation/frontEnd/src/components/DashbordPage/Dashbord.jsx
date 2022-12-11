@@ -109,15 +109,23 @@ function Dashbord() {
     
             type: 'progressBar',
             data: {
-              datasets: [
+                datasets: [
                 {
-                  data: AllBriefs.map((value)=>value.Percentage),
+                    data: AllBriefs.map((value)=>value.Percentage),
+                    backgroundColor: 'green',
                 },
               ],
             },
+          
             options: {
               plugins: {
                 datalabels: {
+                    
+                        formatter: (val) => {
+                          return val.toLocaleString()+  "%";
+                        },
+                     
+                     
                   font: {
                     size: 30,
                   },
@@ -181,8 +189,10 @@ function Dashbord() {
                         <div className="col-6 border border-dark">Column</div>
                         <div className="col-6 border border-dark">
                             <h2>Etat d'avencement de brief :</h2>
-                            {AllBriefs.map((value)=>
+                            {AllBriefs.map((value)=> <div>
                             <li key={value.id}>{value.Nom_du_brief}</li>
+                            </div>
+                            
                             )}
                             <img style={{width:300}} src={BriefImage}></img>
                         </div>
