@@ -31,6 +31,6 @@ Route::resource('formateur', FormateurController::class);
 
 Route::get('ApprenantBrief/{idG}', [GroupesController::class,'ApprenantBrief'])->name('ApprenantBrief');
 
-Route::get('Av_ApprenantTache/{idF}/{idG}/{idA}/{idB}', [GroupesController::class,'Av_ApprenantTache'])->name('Av_ApprenantTache');
+Route::get('Av_ApprenantTache/{idF}/{idB}', [GroupesController::class,'Av_ApprenantTache'])->name('Av_ApprenantTache');
 Route::get('ApprenantsCount/{id}', [ApprenantController::class,'ApprenantsCount'])->name('ApprenantsCount');
 Route::resource('anne', AnneeFormationController::class);

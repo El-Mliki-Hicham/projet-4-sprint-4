@@ -200,14 +200,14 @@ $ToutalTacheTerminer= apprenant_preparation_tach::select(
         function ListApprenant($id){
 
 
-                $groupeId = groupes_apprenant::select("groupes.id")
-                ->join('groupes', 'groupes_apprenant.Groupe_id', '=','groupes.id')
-                ->join('apprenant', 'groupes_apprenant.Apprenant_id', '=','apprenant.id')
-                ->join('annee_formation', 'groupes.Annee_formation_id', '=', 'annee_formation.id')
+                // $groupeId = groupes_apprenant::select("groupes.id")
+                // ->join('groupes', 'groupes_apprenant.Groupe_id', '=','groupes.id')
+                // ->join('apprenant', 'groupes_apprenant.Apprenant_id', '=','apprenant.id')
+                // ->join('annee_formation', 'groupes.Annee_formation_id', '=', 'annee_formation.id')
 
-                ->orderBy('annee_formation.id', 'desc')
-                ->where("Formateur_id",$id)
-                 ->first();
+                // ->orderBy('annee_formation.id', 'desc')
+                // ->where("Formateur_id",$id)
+                //  ->first();
 
 
                 $ListApprentant = groupes_apprenant::select("apprenant.*",'groupes.*')
@@ -217,15 +217,15 @@ $ToutalTacheTerminer= apprenant_preparation_tach::select(
 
                 ->orderBy('annee_formation.id', 'desc')
                 ->where([
-                    ["Formateur_id",$id],
-                    ["Groupe_id",$groupeId->id]
+
+                    ["Groupe_id",$id]
                 ])
                  ->get();
                     // dd($ListApprentant);
 
 
 
-                return [$ListApprentant,$groupeId];
+                return [$ListApprentant];
             }
     //      function ApprenantBrief($idG){
     //         $ApprenantBrief= apprenant_preparation_tach::select(
@@ -252,7 +252,7 @@ $ToutalTacheTerminer= apprenant_preparation_tach::select(
     // }
 
 
-    //      function Av_ApprenantTache($idF,$idG,$idA,$idB){
+         function Av_ApprenantTache($idG,$idB){
 
 
 
@@ -285,26 +285,31 @@ $ToutalTacheTerminer= apprenant_preparation_tach::select(
 
 
     //          //numbre des tache
-    //         $CountToutalTaches= apprenant_preparation_tach::select(
+            $BriefAV= apprenant_preparation_tach::select(
 
-    //             "preparation_tache.Nom_tache",
-    //             "apprenant_preparation_tache.Etat",
+                "apprenant.Nom",
+                // "apprenant_preparation_tache.Etat",
+                // DB::raw("count('apprenant_preparation_tache.Etat')"),
+                // DB::raw("count(CASE Etat WHEN 'terminer' THEN 1 ELSE NULL END)"),
+                DB::raw(" 100 / count('apprenant_preparation_tache.Etat')   * count(CASE Etat WHEN 'terminer' THEN 1 ELSE NULL END) as Percentage"),
 
-    //             )
-    //         ->join('apprenant', 'apprenant_preparation_tache.Apprenant_id', '=','apprenant.id')
-    //         ->join('preparation_tache', 'apprenant_preparation_tache.Preparation_tache_id', '=','preparation_tache.id')
-    //         ->join('apprenant_preparation_brief', 'apprenant_preparation_tache.Apprenant_P_Brief_id', '=','apprenant_preparation_brief.id')
-    //         ->join('preparation_brief', 'apprenant_preparation_brief.Preparation_brief_id', '=','preparation_brief.id')
-    //         ->join('groupes_preparation_brief','apprenant_preparation_brief.id','=','groupes_preparation_brief.Apprenant_preparation_brief_id')
-    //         ->where([
-    //             ['Formateur_id',$idF],
-    //             ['groupes_preparation_brief.Groupe_id',$idG],
-    //             ['apprenant.id',$idA],
-    //             ['preparation_brief.id',$idB]
-    //         ])
-    //         ->count()
-    //         ;
-    //         // dd($CountToutalTaches);
+                )
+            ->join('apprenant', 'apprenant_preparation_tache.Apprenant_id', '=','apprenant.id')
+            ->join('preparation_tache', 'apprenant_preparation_tache.Preparation_tache_id', '=','preparation_tache.id')
+            ->join('apprenant_preparation_brief', 'apprenant_preparation_tache.Apprenant_P_Brief_id', '=','apprenant_preparation_brief.id')
+            ->join('preparation_brief', 'apprenant_preparation_brief.Preparation_brief_id', '=','preparation_brief.id')
+            ->join('groupes_preparation_brief','apprenant_preparation_brief.id','=','groupes_preparation_brief.Apprenant_preparation_brief_id')
+            ->where([
+
+                ['groupes_preparation_brief.Groupe_id',$idG],
+
+                ['preparation_brief.id',$idB]
+            ])
+            ->groupBy('Nom')
+            ->get()
+            ;
+
+            // dd($CountToutalTaches);
 
 
     //              //numbre des tache terminer
@@ -341,8 +346,8 @@ $ToutalTacheTerminer= apprenant_preparation_tach::select(
 
 
     //         // dd($ApprenantBrief);
-    //         return [$avancementApp,$listBrief];
-    // }
+            return [$BriefAV];
+    }
 
 //
 //
