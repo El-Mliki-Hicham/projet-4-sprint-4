@@ -101,7 +101,7 @@ function Dashbord() {
         axios.get("http://localhost:8000/api/Av_ApprenantTache/" + IdGroupe+'/'+briefId)
         .then(res => {
            setApprenantAV(res.data[0])
-            console.log(res.data[0])
+            // console.log(res.data[0])
             
         })
         

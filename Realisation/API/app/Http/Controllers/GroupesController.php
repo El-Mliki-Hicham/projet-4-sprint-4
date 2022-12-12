@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\apprenant_preparation_brief;
-use App\Models\apprenant_preparation_tach;
-use App\Models\formateur;
 use App\Models\groupes;
-use App\Models\groupes_apprenant;
+use App\Models\formateur;
 use Illuminate\Http\Request;
+use App\Models\groupes_apprenant;
 use Illuminate\Support\Facades\DB;
+use App\Models\apprenant_preparation_tach;
+use App\Models\apprenant_preparation_brief;
 
 class GroupesController extends Controller
 {
@@ -82,7 +82,7 @@ class GroupesController extends Controller
                 // }
 
                 //  dd($listBrief);
-                 return [$Groupes,$CountAppenants,$listBrief] ;
+                    return [$Groupes,$CountAppenants,$listBrief] ;
     }
 
 
@@ -92,8 +92,34 @@ class GroupesController extends Controller
         $Groupes = groupes::select("*","groupes.id as idGroupe")->where('Formateur_id',$id)
         ->join('formateur', 'groupes.Formateur_id', '=', 'formateur.id')
         ->join('annee_formation', 'groupes.Annee_formation_id', '=', 'annee_formation.id')
+
+        // ->join('apprenant', 'apprenant_preparation_tache.Apprenant_id', '=','apprenant.id')
         ->orderBy('annee_formation.Annee_scolaire','desc')
         ->first();
+
+        // dd($Groupes);
+        $IdBrief= apprenant_preparation_tach::select(
+
+            "preparation_brief.Nom_du_brief",'preparation_brief.id as id' ,
+            // DB::raw(" 100 / count('apprenant_preparation_tache.Etat')   * count(CASE Etat WHEN 'terminer' THEN 1 ELSE NULL END) as Percentage"),
+            )
+            ->join('apprenant', 'apprenant_preparation_tache.Apprenant_id', '=','apprenant.id')
+            ->join('preparation_tache', 'apprenant_preparation_tache.Preparation_tache_id', '=','preparation_tache.id')
+            ->join('apprenant_preparation_brief', 'apprenant_preparation_tache.Apprenant_P_Brief_id', '=','apprenant_preparation_brief.id')
+            ->join('preparation_brief', 'apprenant_preparation_brief.Preparation_brief_id', '=','preparation_brief.id')
+            ->join('groupes_preparation_brief','apprenant_preparation_brief.id','=','groupes_preparation_brief.Apprenant_preparation_brief_id')
+            ->where([
+
+                ['groupes_preparation_brief.Groupe_id',$Groupes->idGroupe],
+
+
+                ])
+            ->groupBy("Nom_du_brief")
+            ->groupBy("preparation_brief.id")
+            ->orderBy('preparation_brief.id','desc')
+            // ->selectRaw('preparation_brief.id as id')
+                ->first();
+                // dd($listBrief);
 
 
 
@@ -126,7 +152,7 @@ class GroupesController extends Controller
 
     )
 ->join('apprenant', 'apprenant_preparation_tache.Apprenant_id', '=','apprenant.id')
-->join('preparation_tache', 'apprenant_preparation_tache.Preparation_tache_id', '=','preparation_tache.id')
+->join('preparation_tache','apprenant_preparation_tache.Preparation_tache_id', '=','preparation_tache.id')
 ->join('apprenant_preparation_brief', 'apprenant_preparation_tache.Apprenant_P_Brief_id', '=','apprenant_preparation_brief.id')
 ->join('preparation_brief', 'apprenant_preparation_brief.Preparation_brief_id', '=','preparation_brief.id')
 ->join('groupes_preparation_brief','apprenant_preparation_brief.id','=','groupes_preparation_brief.Apprenant_preparation_brief_id')
@@ -192,10 +218,35 @@ $ToutalTacheTerminer= apprenant_preparation_tach::select(
                         ])
                     ->groupBy("Nom_du_brief")
                     ->groupBy("preparation_brief.id")
+                    ->orderBy('preparation_brief.id','desc')
                     // ->selectRaw('preparation_brief.id as id')
                         ->get();
+                        // dd($listBrief);
+                 $FirstBrief= apprenant_preparation_tach::select(
 
-        return [$Groupes,$CountAppenants,$GetAppenants,$avancementApp,$listBrief];
+                    "preparation_brief.Nom_du_brief",'preparation_brief.id as id' ,
+                    DB::raw(" 100 / count('apprenant_preparation_tache.Etat')   * count(CASE Etat WHEN 'terminer' THEN 1 ELSE NULL END) as Percentage"),
+                    )
+                    ->join('apprenant', 'apprenant_preparation_tache.Apprenant_id', '=','apprenant.id')
+                    ->join('preparation_tache', 'apprenant_preparation_tache.Preparation_tache_id', '=','preparation_tache.id')
+                    ->join('apprenant_preparation_brief', 'apprenant_preparation_tache.Apprenant_P_Brief_id', '=','apprenant_preparation_brief.id')
+                    ->join('preparation_brief', 'apprenant_preparation_brief.Preparation_brief_id', '=','preparation_brief.id')
+                    ->join('groupes_preparation_brief','apprenant_preparation_brief.id','=','groupes_preparation_brief.Apprenant_preparation_brief_id')
+                    ->where([
+
+                        ['groupes_preparation_brief.Groupe_id',$Groupes->idGroupe],
+                        ['preparation_brief.id',1],
+
+
+                        ])
+                    ->groupBy("Nom_du_brief")
+                    ->groupBy("preparation_brief.id")
+                    ->orderBy('preparation_brief.id','desc')
+                    // ->selectRaw('preparation_brief.id as id')
+                        ->first();
+                        // dd($FirstBrief);
+
+        return [$Groupes,$CountAppenants,$GetAppenants,$avancementApp,$listBrief,$FirstBrief];
     }
         function ListApprenant($id){
 
