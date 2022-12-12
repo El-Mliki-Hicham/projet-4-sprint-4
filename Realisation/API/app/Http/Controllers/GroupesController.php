@@ -223,7 +223,7 @@ $ToutalTacheTerminer= apprenant_preparation_tach::select(
                         ->get();
                         // dd($listBrief);
                  $FirstBrief= apprenant_preparation_tach::select(
-
+                    "apprenant.Nom",
                     "preparation_brief.Nom_du_brief",'preparation_brief.id as id' ,
                     DB::raw(" 100 / count('apprenant_preparation_tache.Etat')   * count(CASE Etat WHEN 'terminer' THEN 1 ELSE NULL END) as Percentage"),
                     )
@@ -235,15 +235,16 @@ $ToutalTacheTerminer= apprenant_preparation_tach::select(
                     ->where([
 
                         ['groupes_preparation_brief.Groupe_id',$Groupes->idGroupe],
-                        ['preparation_brief.id',1],
+                        ['preparation_brief.id',$IdBrief->id],
 
 
                         ])
                     ->groupBy("Nom_du_brief")
+                    ->groupBy("Nom")
                     ->groupBy("preparation_brief.id")
                     ->orderBy('preparation_brief.id','desc')
                     // ->selectRaw('preparation_brief.id as id')
-                        ->first();
+                        ->get();
                         // dd($FirstBrief);
 
         return [$Groupes,$CountAppenants,$GetAppenants,$avancementApp,$listBrief,$FirstBrief];

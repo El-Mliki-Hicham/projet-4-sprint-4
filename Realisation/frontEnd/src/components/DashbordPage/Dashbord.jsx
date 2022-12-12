@@ -1,9 +1,11 @@
 import QuickChart from 'quickchart-js';
 import React from 'react';
 import Cookies from "universal-cookie";
+import { useRoutes, useRouteMatch, useHistory } from 'react-router-dom';
 import {
     useEffect,
-    useState
+    useState,
+   
 } from "react";
 import axios from "axios";
 import AvancementApprenant from './Apprenant-AV';
@@ -20,9 +22,23 @@ function Dashbord() {
     const [NumberApprenant, setNumberApprenant] = useState([]);
     const [IdGroupe, setIdGroupe] = useState([]);
     const cookies = new Cookies();
+    // const router =  useHistory();
+    // useEffect(() => {
+
+    //         axios.get("http://localhost:8000/api/ListApprenant/" + IdGroupe)
+    //         .then(res => {
+    //             // console.log(res.data[0])
+                
+    //             setApprenants(res.data[0])
+
+    //         })
+    // }, [yourState]);
+
+ 
 
     useEffect(() => {
 
+      
         let idFormateur = cookies.get('FormateurID')
 
         //Api anné Scolaire
@@ -54,7 +70,8 @@ function Dashbord() {
                     setApprenants(res.data[2])
                     setPourcentage(res.data[3].toFixed(0))
                     setAllBriefs(res.data[4])
-                    console.log(res.data)
+                    setApprenantAV(res.data[5])
+                    // console.log(res.data)
 
                     cookies.set('GroupeID', res.data[0].idGroupe)
                 })
@@ -86,13 +103,13 @@ function Dashbord() {
 
 
             })
-        // axios.get("http://localhost:8000/api/ListApprenant/" + idGroupe)
-        //     .then(res => {
-        //         // console.log(res.data[0])
-                
-        //         setApprenants2(res.data[0])
+        axios.get("http://localhost:8000/api/ListApprenant/" + idGroupe)
+            .then(res => {
+                // console.log(res.data[0])
+                // router.push(`/${e.target.value}`)
+                // setApprenants(res.data[0])
 
-        //     })
+            })
 
     }
     //select Brief 
@@ -186,7 +203,7 @@ function Dashbord() {
         data: {
             datasets: [{
                 data: ApprenantAV.map((value) => value.Percentage),
-                backgroundColor: 'green',
+                backgroundColor: 'blue',
             }, ],
         },
 
@@ -225,9 +242,10 @@ function Dashbord() {
                         <h1>Tableau de borde d’état d’avancement</h1>
                     </div>
                     <div className="col-sm">
-                        <select onChange={selectDate} name="" id="">
+                        <select  onChange={selectDate} name="" id="">
                             {DataGroupes.map((value)=>
-                            <option key={value.id} value={value.id}>{value.Annee_scolaire}</option>
+                            <option  key={value.id} value={value.id}>{value.Annee_scolaire}</option>
+                            
                             )}
                         </select>
                     </div>
