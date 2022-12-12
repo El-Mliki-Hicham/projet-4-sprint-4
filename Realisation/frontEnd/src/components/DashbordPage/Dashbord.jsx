@@ -10,7 +10,7 @@ import AvancementApprenant from './Apprenant-AV';
 
 function Dashbord() {
     const [DataGroupes, setDataGroupes] = useState([]);
-    const [ApprenantAV, setApprenantAV] = useState([{Percentage:40},{Percentage:45}]);
+    const [ApprenantAV, setApprenantAV] = useState([]);
     const [Pourcentage, setPourcentage] = useState([]);
     const [chartImage, setChartImage] = useState();
     const [AllBriefs, setAllBriefs] = useState([]);
@@ -101,8 +101,8 @@ function Dashbord() {
         axios.get("http://localhost:8000/api/Av_ApprenantTache/" + IdGroupe+'/'+briefId)
         .then(res => {
            setApprenantAV(res.data[0])
+            console.log(res.data[0])
             
-
         })
         
     }

@@ -36,7 +36,7 @@ class GroupesController extends Controller
         $Groupes = groupes::select("*")->where('groupes.id',$id)
         ->join('formateur', 'groupes.Formateur_id', '=', 'formateur.id')
         ->join('annee_formation', 'groupes.Annee_formation_id', '=', 'annee_formation.id')
-        ->orderBy('annee_formation.id','desc')
+        ->orderBy('annee_formation.Annee_scolaire','desc')
         ->get();
 
 
@@ -92,7 +92,7 @@ class GroupesController extends Controller
         $Groupes = groupes::select("*","groupes.id as idGroupe")->where('Formateur_id',$id)
         ->join('formateur', 'groupes.Formateur_id', '=', 'formateur.id')
         ->join('annee_formation', 'groupes.Annee_formation_id', '=', 'annee_formation.id')
-        ->orderBy('annee_formation.id', 'desc')
+        ->orderBy('annee_formation.Annee_scolaire','desc')
         ->first();
 
 
@@ -215,7 +215,7 @@ $ToutalTacheTerminer= apprenant_preparation_tach::select(
                 ->join('apprenant', 'groupes_apprenant.Apprenant_id', '=','apprenant.id')
                 ->join('annee_formation', 'groupes.Annee_formation_id', '=', 'annee_formation.id')
 
-                ->orderBy('annee_formation.id', 'desc')
+                ->orderBy('annee_formation.Annee_scolaire','desc')
                 ->where([
 
                     ["Groupe_id",$id]
