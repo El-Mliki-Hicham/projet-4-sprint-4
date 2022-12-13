@@ -19,7 +19,7 @@ render(){
       
       <BrowserRouter>
       <Routes>
-        <Route path='/dashbord' element={<Dashbord />}></Route>
+       <Route path='dashbord/:id' element={<Dashbord />}></Route>console.warn();
         <Route path='/' element={<Login />}></Route>
 
       </Routes>
