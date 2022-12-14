@@ -19,7 +19,7 @@ render(){
       
       <BrowserRouter>
       <Routes>
-{ ["dashbord","dashbord/:id"].map(value=><Route key={Math.random()} path={value} element={<Dashbord />}></Route>)}
+      <Route  path="dashbord" element={<Dashbord />}></Route>
         <Route path='/' element={<Login />}></Route>
 
       </Routes>

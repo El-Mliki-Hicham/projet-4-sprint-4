@@ -3,7 +3,6 @@ import React from "react";
 import Cookies from "universal-cookie";
 import {
   useNavigate,
-  useParams,
 } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -12,29 +11,16 @@ import AvancementBriefs from "./AvancementBriefs";
 import AvancementApprenant from "./AvancementApprenants";
 
 function Dashbord() {
-  const [DataGroupes, setDataGroupes] = useState([]);
   const [OneGroupe, setOneGroupe] = useState([]);
   const [NumberApprenant, setNumberApprenant] = useState([]);
   const cookies = new Cookies();
-  const navigate = useNavigate();
 
-  const ParamsId = useParams();
   useEffect(() => {
+    
+    
     let idFormateur = cookies.get("FormateurID");
 
-    //Api anné Scolaire
-    const DataGroupes = async () => {
-      await axios
-        .get("http://localhost:8000/api/AllGroupes/" + idFormateur)
-        .then((res) => {
-          setDataGroupes(res.data);
-          // console.log(res.data)
-        });
-    };
-    DataGroupes();
-
-
-    // Api Detaile
+  // détail de groupe
     const OneGroupe = async () => {
       await axios
         .get("http://localhost:8000/api/OneGroupe/" + idFormateur)
@@ -48,8 +34,6 @@ function Dashbord() {
   }, []);
 
 
-
- 
   return (
     <div>
       <div className="container">
