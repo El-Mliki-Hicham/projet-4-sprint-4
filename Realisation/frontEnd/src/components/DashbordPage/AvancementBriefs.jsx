@@ -16,7 +16,7 @@ useEffect(() => {
         await axios
           .get("http://localhost:8000/api/OneGroupe/" + idFormateur)
           .then((res) => {           
-            setAllBriefs(res.data[4]);
+            setAllBriefs(res.data.ListBrifes);
           });
       };
       AvancementBrief();

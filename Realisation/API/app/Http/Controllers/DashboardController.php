@@ -135,7 +135,18 @@ class DashboardController extends Controller
 
                         ->get();
 
-                    return [$Groupes,$CountAppenants,$GetAppenants,$AvancementGroupe,$listBrief,$FirstBrief];
+                    //     return response()->json([
+                    //         'Groupes' =>$Groupes
+                    //     ]);
+                    // }
+                    return  response()->json([
+                       'Groupe'=> $Groupes,
+                       "ToutalApprenants"=> $CountAppenants,
+                       "ListApprenants"=> $GetAppenants,
+                        "AvancementGroupe"=>$AvancementGroupe,
+                       "ListBrifes"=> $listBrief,
+                        "FirstBrief"=>$FirstBrief
+                    ]);
             }
 
 // Avancement des Apprenant
@@ -163,6 +174,6 @@ class DashboardController extends Controller
             ;
 
 
-            return [$BriefAV];
+            return response()->json(["avancemantBrief"=> $BriefAV]);
     }
 }

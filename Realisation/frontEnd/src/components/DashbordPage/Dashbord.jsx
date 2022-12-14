@@ -25,8 +25,8 @@ function Dashbord() {
       await axios
         .get("http://localhost:8000/api/OneGroupe/" + idFormateur)
         .then((res) => {
-          setOneGroupe(res.data[0]);
-          setNumberApprenant(res.data[1]);
+          setOneGroupe(res.data.Groupe);
+          setNumberApprenant(res.data.ToutalApprenants);
         });
     };
     OneGroupe();

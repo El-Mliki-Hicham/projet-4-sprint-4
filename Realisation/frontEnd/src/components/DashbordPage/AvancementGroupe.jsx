@@ -18,8 +18,8 @@ function AvancementGroupe (){
         await axios.get("http://localhost:8000/api/OneGroupe/" + idFormateur)
           .then((res) => {
             
-            setPourcentage(res.data[3][0].Percentage)
-            cookies.set("GroupeID", res.data[0].idGroupe);
+            setPourcentage(res.data.AvancementGroupe[0].Percentage)
+            cookies.set("GroupeID", res.data.Groupe.idGroupe);
           });
 
         };

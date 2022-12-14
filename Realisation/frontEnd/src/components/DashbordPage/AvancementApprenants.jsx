@@ -17,15 +17,16 @@ function AvancementApprenant(){
    useEffect(() => {
        
        const AvancementApprenant = async () => {
-              console.log(ParamsId)
+              // console.log(ParamsId)
             let idFormateur = cookies.get("FormateurID");
             await axios
               .get("http://localhost:8000/api/OneGroupe/" + idFormateur)
               .then((res) => {
-                setApprenants(res.data[2]);
-                setAllBriefs(res.data[4]);
-                setApprenantAV(res.data[5]);
-                setIdGroupe( res.data[0].idGroupe);
+                setApprenants(res.data.ListApprenants);
+                setAllBriefs(res.data.ListBrifes);
+                setApprenantAV(res.data.ListBrifes);
+                setIdGroupe(res.data.Groupe.idGroupe);
+                // console.log(e)
               });
           };
           AvancementApprenant()
@@ -44,10 +45,10 @@ const selectBrief=(e)=>{
         "http://localhost:8000/api/Av_ApprenantTache/" +  IdGroupe + "/" + briefId
         )
         .then((res) => {
-            setApprenantAV(res.data[0]);
+            setApprenantAV(res.data.avancemantBrief);
         });
         
-        console.log(e.target.value)
+        // console.log(e.target.value)
     }
 
     
