@@ -18,8 +18,8 @@ class DashboardController extends Controller
 
 
 
-//détail de dernier groupe
-    function OneGroupe($id){
+//détail de groupe
+    function Groupe($id){
 
 // get dernier Groupe
         $Groupes = groupes::select("*","groupes.id as idGroupe")

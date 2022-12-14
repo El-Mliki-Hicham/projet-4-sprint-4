@@ -21,15 +21,15 @@ function Dashbord() {
     let idFormateur = cookies.get("FormateurID");
 
   // détail de groupe
-    const OneGroupe = async () => {
+    const Groupe = async () => {
       await axios
-        .get("http://localhost:8000/api/OneGroupe/" + idFormateur)
+        .get("http://localhost:8000/api/Groupe/" + idFormateur)
         .then((res) => {
           setOneGroupe(res.data.Groupe);
           setNumberApprenant(res.data.ToutalApprenants);
         });
     };
-    OneGroupe();
+    Groupe();
   
   }, []);
 

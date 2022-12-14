@@ -15,7 +15,7 @@ function AvancementGroupe (){
     let idFormateur = cookies.get("FormateurID");
 
     const avancement = async () => {
-        await axios.get("http://localhost:8000/api/OneGroupe/" + idFormateur)
+        await axios.get("http://localhost:8000/api/Groupe/" + idFormateur)
           .then((res) => {
             
             setPourcentage(res.data.AvancementGroupe[0].Percentage)

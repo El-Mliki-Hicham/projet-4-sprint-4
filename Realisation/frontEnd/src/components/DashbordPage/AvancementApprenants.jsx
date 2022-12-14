@@ -17,16 +17,14 @@ function AvancementApprenant(){
    useEffect(() => {
        
        const AvancementApprenant = async () => {
-              // console.log(ParamsId)
             let idFormateur = cookies.get("FormateurID");
             await axios
-              .get("http://localhost:8000/api/OneGroupe/" + idFormateur)
+              .get("http://localhost:8000/api/Groupe/" + idFormateur)
               .then((res) => {
                 setApprenants(res.data.ListApprenants);
                 setAllBriefs(res.data.ListBrifes);
                 setApprenantAV(res.data.ListBrifes);
                 setIdGroupe(res.data.Groupe.idGroupe);
-                // console.log(e)
               });
           };
           AvancementApprenant()
