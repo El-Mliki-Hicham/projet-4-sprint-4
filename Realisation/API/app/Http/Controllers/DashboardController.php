@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\groupes;
 use App\Models\formateur;
-use Illuminate\Http\Request;
 use App\Models\groupes_apprenant;
 use Illuminate\Support\Facades\DB;
 use App\Models\apprenant_preparation_tach;
@@ -72,10 +71,8 @@ class DashboardController extends Controller
 
 // Avancement de dernier groupe
         $AvancementGroupe= apprenant_preparation_tach::select(
-
         DB::raw(" 100 / count('apprenant_preparation_tache')   * count(CASE Etat WHEN 'terminer' THEN 1 ELSE NULL END) as Percentage"),
-
-            )
+        )
         ->join('apprenant', 'apprenant_preparation_tache.Apprenant_id', '=','apprenant.id')
         ->join('preparation_tache', 'apprenant_preparation_tache.Preparation_tache_id', '=','preparation_tache.id')
         ->join('apprenant_preparation_brief', 'apprenant_preparation_tache.Apprenant_P_Brief_id', '=','apprenant_preparation_brief.id')
@@ -111,7 +108,6 @@ class DashboardController extends Controller
                     ->groupBy("Nom_du_brief")
                     ->groupBy("preparation_brief.id")
                     ->orderBy('preparation_brief.id','desc')
-
                         ->get();
 
 //get first brief
@@ -142,7 +138,7 @@ class DashboardController extends Controller
                     return [$Groupes,$CountAppenants,$GetAppenants,$AvancementGroupe,$listBrief,$FirstBrief];
             }
 
-// Avancement des Apprenant 
+// Avancement des Apprenant
          function Av_ApprenantTache($idG,$idB){
 
             $BriefAV= apprenant_preparation_tach::select(
