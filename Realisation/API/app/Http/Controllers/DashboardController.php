@@ -19,10 +19,10 @@ class DashboardController extends Controller
 
 
 
-    //détail de dernier groupe
+//détail de dernier groupe
     function OneGroupe($id){
 
-        // get dernier Groupe
+// get dernier Groupe
         $Groupes = groupes::select("*","groupes.id as idGroupe")
         ->where('Formateur_id',$id)
         ->join('formateur', 'groupes.Formateur_id', '=', 'formateur.id')
@@ -30,7 +30,7 @@ class DashboardController extends Controller
         ->orderBy('annee_formation.Annee_scolaire','desc')
         ->first();
 
-        // get dernier Brief
+ // get dernier Brief
         $IdBrief= apprenant_preparation_tach::select(
             "preparation_brief.Nom_du_brief",'preparation_brief.id as id' ,
             )
@@ -47,7 +47,7 @@ class DashboardController extends Controller
             ->orderBy('preparation_brief.id','desc')
                 ->first();
 
-    // Toutal des apprenants
+// Toutal des apprenants
          $CountAppenants = groupes_apprenant::select("*")
         ->where([
             ['Formateur_id',$id],
@@ -58,6 +58,7 @@ class DashboardController extends Controller
             ->join('apprenant', 'groupes_apprenant.Apprenant_id', '=', 'apprenant.id')
             ->count();
 
+// list des apprenant
             $GetAppenants = groupes_apprenant::select("*")
             ->where([
             ['Formateur_id',$id],
@@ -70,27 +71,27 @@ class DashboardController extends Controller
 
 
 // Avancement de dernier groupe
-$AvancementGroupe= apprenant_preparation_tach::select(
+        $AvancementGroupe= apprenant_preparation_tach::select(
 
-    DB::raw(" 100 / count('apprenant_preparation_tache')   * count(CASE Etat WHEN 'terminer' THEN 1 ELSE NULL END) as Percentage"),
+        DB::raw(" 100 / count('apprenant_preparation_tache')   * count(CASE Etat WHEN 'terminer' THEN 1 ELSE NULL END) as Percentage"),
 
-    )
-    ->join('apprenant', 'apprenant_preparation_tache.Apprenant_id', '=','apprenant.id')
-    ->join('preparation_tache', 'apprenant_preparation_tache.Preparation_tache_id', '=','preparation_tache.id')
-    ->join('apprenant_preparation_brief', 'apprenant_preparation_tache.Apprenant_P_Brief_id', '=','apprenant_preparation_brief.id')
-    ->join('preparation_brief', 'apprenant_preparation_brief.Preparation_brief_id', '=','preparation_brief.id')
-    ->join('groupes_preparation_brief','apprenant_preparation_brief.id','=','groupes_preparation_brief.Apprenant_preparation_brief_id')
-    ->where([
+            )
+        ->join('apprenant', 'apprenant_preparation_tache.Apprenant_id', '=','apprenant.id')
+        ->join('preparation_tache', 'apprenant_preparation_tache.Preparation_tache_id', '=','preparation_tache.id')
+        ->join('apprenant_preparation_brief', 'apprenant_preparation_tache.Apprenant_P_Brief_id', '=','apprenant_preparation_brief.id')
+        ->join('preparation_brief', 'apprenant_preparation_brief.Preparation_brief_id', '=','preparation_brief.id')
+        ->join('groupes_preparation_brief','apprenant_preparation_brief.id','=','groupes_preparation_brief.Apprenant_preparation_brief_id')
+        ->where([
 
-        ['groupes_preparation_brief.Groupe_id',$Groupes->idGroupe],
+            ['groupes_preparation_brief.Groupe_id',$Groupes->idGroupe],
 
-        ])
-        ->groupBy("groupes_preparation_brief.Groupe_id")
-        ->get();
+            ])
+            ->groupBy("groupes_preparation_brief.Groupe_id")
+            ->get();
 
 
 
-    //listBrief
+//list des briefs
                  $listBrief= apprenant_preparation_tach::select(
 
                     "preparation_brief.Nom_du_brief",'preparation_brief.id as id' ,
@@ -113,7 +114,7 @@ $AvancementGroupe= apprenant_preparation_tach::select(
 
                         ->get();
 
-      //get first brief
+//get first brief
             $FirstBrief= apprenant_preparation_tach::select(
                     "apprenant.Nom",
                     "preparation_brief.Nom_du_brief",'preparation_brief.id as id' ,
@@ -138,10 +139,10 @@ $AvancementGroupe= apprenant_preparation_tach::select(
 
                         ->get();
 
-        return [$Groupes,$CountAppenants,$GetAppenants,$AvancementGroupe,$listBrief,$FirstBrief];
-    }
+                    return [$Groupes,$CountAppenants,$GetAppenants,$AvancementGroupe,$listBrief,$FirstBrief];
+            }
 
-// Avancement des taches
+// Avancement des Apprenant 
          function Av_ApprenantTache($idG,$idB){
 
             $BriefAV= apprenant_preparation_tach::select(
