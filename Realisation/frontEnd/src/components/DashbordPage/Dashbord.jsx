@@ -11,7 +11,9 @@ import {
 } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import AvancementApprenant from "./Apprenant-AV";
+import AvancementGroupe from "./AvancementGroupe";
+import AvancementBriefs from "./AvancementBriefs";
+import AvancementApprenant from "./AvancementApprenants";
 
 function Dashbord() {
   const [idParams, setIdParames] = useState([]);
@@ -114,124 +116,12 @@ function Dashbord() {
   }
 
   //select Brief
-  const selectBrief = (e) => {
-    const briefId = e.target.value;
-    axios
-      .get(
-        "http://localhost:8000/api/Av_ApprenantTache/" +
-          IdGroupe +
-          "/" +
-          briefId
-      )
-      .then((res) => {
-        setApprenantAV(res.data[0]);
-        // console.log(res.data[0])
-      });
-  };
-
-  const myChart = new QuickChart();
-
-  myChart.setConfig({
-    type: "progressBar",
-    data: {
-      datasets: [
-        {
-          data: [Pourcentage],
-        },
-      ],
-    },
-    options: {
-      plugins: {
-        datalabels: {
-          font: {
-            size: 30,
-          },
-          color: (context) =>
-            context.dataset.data[context.dataIndex] > 15 ? "#fff" : "#000",
-          anchor: (context) =>
-            context.dataset.data[context.dataIndex] > 15 ? "center" : "end",
-          align: (context) =>
-            context.dataset.data[context.dataIndex] > 15 ? "center" : "right",
-        },
-      },
-    },
-  });
-
-  const chartImagee = myChart.getUrl();
-  //
-  const ChartBrifes = new QuickChart();
-
-  ChartBrifes.setConfig({
-    type: "progressBar",
-    data: {
-      datasets: [
-        {
-          data: AllBriefs.map((value) => value.Percentage),
-          backgroundColor: "green",
-        },
-      ],
-    },
-
-    options: {
-      plugins: {
-        datalabels: {
-          formatter: (val) => {
-            return val.toLocaleString() + "%";
-          },
-
-          font: {
-            size: 30,
-          },
-          color: (context) =>
-            context.dataset.data[context.dataIndex] > 15 ? "#fff" : "#000",
-          anchor: (context) =>
-            context.dataset.data[context.dataIndex] > 15 ? "center" : "end",
-          align: (context) =>
-            context.dataset.data[context.dataIndex] > 15 ? "center" : "right",
-        },
-      },
-    },
-  });
-
-  const BriefImage = ChartBrifes.getUrl();
+ 
 
   //
-  const ChartApprenant = new QuickChart();
-
-  ChartApprenant.setConfig({
-    type: "progressBar",
-    data: {
-      datasets: [
-        {
-          data: ApprenantAV.map((value) => value.Percentage),
-          backgroundColor: "blue",
-        },
-      ],
-    },
-
-    options: {
-      plugins: {
-        datalabels: {
-          formatter: (val) => {
-            return val.toLocaleString() + "%";
-          },
-
-          font: {
-            size: 30,
-          },
-          color: (context) =>
-            context.dataset.data[context.dataIndex] > 15 ? "#fff" : "#000",
-          anchor: (context) =>
-            context.dataset.data[context.dataIndex] > 15 ? "center" : "end",
-          align: (context) =>
-            context.dataset.data[context.dataIndex] > 15 ? "center" : "right",
-        },
-      },
-    },
-  });
-
-  const ApprenantImage = ChartApprenant.getUrl();
-
+ 
+  //
+ 
   return (
     <div>
       <div className="container">
@@ -265,46 +155,13 @@ function Dashbord() {
           <br />
           <div className="row">
             {/* etat du groupe */}
-            <div className="col-6 border border-dark ">
-              <h2>Etat d' avancement du groupe:</h2>
-              <img style={{ width: 300 }} src={chartImagee}></img>
-            </div>
+           <AvancementGroupe/>
 
             {/* etat d'apprenant */}
-            <div className="col-6 border border-dark">
-              <h2>Etat d'avencement des apprenants : </h2>
-              <div className="col-sm">
-                <select onChange={selectBrief} name="" id="">
-                  {AllBriefs.map((value) => (
-                    <option key={value.id} value={value.id}>
-                      {value.Nom_du_brief}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              {Apprenants.map((value) => (
-                <div key={value.id}>
-                  <li key={value.id}>
-                    {value.Nom} {value.Prenom}
-                  </li>
-                </div>
-              ))}
-              <img style={{ width: 300 }} src={ApprenantImage}></img>
-
-              {/*
-                            <AvancementApprenant /> */}
-            </div>
+           <AvancementApprenant/>
 
             {/* etat des briefs */}
-            <div className="col-6 border border-dark">
-              <h2>Etat d'avencement de brief :</h2>
-              {AllBriefs.map((value) => (
-                <div key={Math.random()}>
-                  <li key={Math.random()}>{value.Nom_du_brief}</li>
-                </div>
-              ))}
-              <img style={{ width: 300 }} src={BriefImage}></img>
-            </div>
+          <AvancementBriefs/>
           </div>
         </div>
       </div>

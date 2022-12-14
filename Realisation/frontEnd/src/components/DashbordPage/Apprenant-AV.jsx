@@ -7,7 +7,7 @@ import {
 } from "react";
 import axios from "axios";
 
-function AvancementApprenant(){
+function AvancemendtApprenant(){
     const [DataGroupes, setDataGroupes] = useState([]);
     const [Pourcentage, setPourcentage] = useState([]);
     const [chartImage, setChartImage] = useState();
@@ -51,4 +51,3 @@ function AvancementApprenant(){
         </div>
     )
 }
-export default AvancementApprenant

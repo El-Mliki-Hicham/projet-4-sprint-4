@@ -13,7 +13,5 @@ class FormateurController extends Controller
         return $Groupes ;
     }
 
-            public function annee_formation(){
-                return $this->belongsTo(annee_formation::class);
-               }
+
 }
