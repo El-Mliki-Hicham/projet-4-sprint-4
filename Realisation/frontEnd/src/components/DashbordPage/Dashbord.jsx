@@ -21,6 +21,7 @@ function Dashbord() {
     let idFormateur = cookies.get("FormateurID");
 
   // détail de groupe
+  
     const Groupe = async () => {
       await axios
         .get("http://localhost:8000/api/Groupe/" + idFormateur)
