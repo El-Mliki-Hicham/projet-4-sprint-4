@@ -12,22 +12,19 @@ function AvancementApprenant(){
     const [AllBriefs, setAllBriefs] = useState([]);
     const [IdGroupe, setIdGroupe] = useState([]);
     const [Apprenants, setApprenants] = useState([]);
-    const [paramsId, setparamsId] = useState();
    const cookies = new Cookies();
 
    useEffect(() => {
        
        const AvancementApprenant = async () => {
-        //    setparamsId(ParamsId.id)
-              console.log(ParamsId)
             let idFormateur = cookies.get("FormateurID");
             await axios
-              .get("http://localhost:8000/api/OneGroupe/" + idFormateur)
+              .get("http://localhost:8000/api/Groupe/" + idFormateur)
               .then((res) => {
-                setApprenants(res.data[2]);
-                setAllBriefs(res.data[4]);
-                setApprenantAV(res.data[5]);
-                setIdGroupe( res.data[0].idGroupe);
+                setApprenants(res.data.ListApprenants);
+                setAllBriefs(res.data.ListBrifes);
+                setApprenantAV(res.data.ListBrifes);
+                setIdGroupe(res.data.Groupe.idGroupe);
               });
           };
           AvancementApprenant()
@@ -38,25 +35,22 @@ function AvancementApprenant(){
 
   
     
-
-    const selectBrief=(e)=>{
-        const briefId = e.target.value;
-        axios
-          .get(
-            "http://localhost:8000/api/Av_ApprenantTache/" +
-              IdGroupe +
-              "/" +
-              briefId
-          )
-          .then((res) => {
-            setApprenantAV(res.data[0]);
-            // console.log(res.data[0])
-          });
-
-        console.log(e.target.value)
+// selectionner brief
+const selectBrief=(e)=>{
+    const briefId = e.target.value;
+    axios
+    .get(
+        "http://localhost:8000/api/Av_ApprenantTache/" +  IdGroupe + "/" + briefId
+        )
+        .then((res) => {
+            setApprenantAV(res.data.avancemantBrief);
+        });
+        
+        // console.log(e.target.value)
     }
 
-
+    
+    // Chart Apprenant
     const ChartApprenant = new QuickChart();
 
     ChartApprenant.setConfig({
@@ -93,11 +87,12 @@ function AvancementApprenant(){
   
     const ApprenantImage = ChartApprenant.getUrl();
   
-
+// Output
     return(
         <div className="col-6 border border-dark">
         <h2>Etat d'avencement des apprenants : </h2>
         <div className="col-sm">
+            {/* selectionner brief */}
           <select onChange={selectBrief} name="" id="">
             {AllBriefs.map((value) => (
               <option key={value.id} value={value.id}>
@@ -106,16 +101,16 @@ function AvancementApprenant(){
             ))}
           </select>
         </div>
+        {/* list apprenant */}
         {Apprenants.map((value) => (
-          <div key={value.id}>
+            <div key={value.id}>
             <li key={value.id}>
               {value.Nom} {value.Prenom}
             </li>
           </div>
         ))} 
+        {/* chart */}
         <img style={{ width: 300 }} src={ApprenantImage}></img> 
-
-        <h1>{paramsId} </h1>
       </div>
     )
 }

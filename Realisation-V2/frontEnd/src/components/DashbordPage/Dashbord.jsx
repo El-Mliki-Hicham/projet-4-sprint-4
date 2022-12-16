@@ -2,12 +2,7 @@ import QuickChart from "quickchart-js";
 import React from "react";
 import Cookies from "universal-cookie";
 import {
-  useRoutes,
-  useRouteMatch,
-  useHistory,
   useNavigate,
-  generatePath,
-  useParams,
 } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -16,116 +11,76 @@ import AvancementBriefs from "./AvancementBriefs";
 import AvancementApprenant from "./AvancementApprenants";
 
 function Dashbord() {
-  const [idParams, setIdParames] = useState([]);
-  const [DataGroupes, setDataGroupes] = useState([]);
-  const [ApprenantAV, setApprenantAV] = useState([]);
-  const [Pourcentage, setPourcentage] = useState([]);
-  const [chartImage, setChartImage] = useState();
-  const [AllBriefs, setAllBriefs] = useState([]);
   const [OneGroupe, setOneGroupe] = useState([]);
-  const [Apprenants, setApprenants] = useState([]);
-  const [Apprenants2, setApprenants2] = useState("");
+  const [Anne_formation, setAnne_formation] = useState([]);
   const [NumberApprenant, setNumberApprenant] = useState([]);
-  const [IdGroupe, setIdGroupe] = useState([]);
+  const [ChangeId, SetChangeId] = useState('');
   const cookies = new Cookies();
-  const navigate = useNavigate();
-  // const router =  useHistory();
-  // useEffect(() => {
 
-  //         axios.get("http://localhost:8000/api/ListApprenant/" + IdGroupe)
-  //         .then(res => {
-  //             // console.log(res.data[0])
-
-  //             setApprenants(res.data[0])
-
-  //         })
-  // }, [yourState]);
-
-  const ParamsId = useParams();
   useEffect(() => {
+    
+    
     let idFormateur = cookies.get("FormateurID");
 
-    //Api anné Scolaire
-    const DataGroupes = async () => {
+  // détail de groupe
+  
+    const Groupe = async () => {
       await axios
-        .get("http://localhost:8000/api/AllGroupes/" + idFormateur)
+        .get("http://localhost:8000/api/Groupe/" + idFormateur)
         .then((res) => {
-          setDataGroupes(res.data);
+          setOneGroupe(res.data.Groupe);
+          setNumberApprenant(res.data.ToutalApprenants);
+        });
+    };
+    Groupe();
+    const anne_formation = async () => {
+      await axios
+        .get("http://localhost:8000/api/anne_formation/" + idFormateur)
+        .then((res) => {
           // console.log(res.data)
+          setAnne_formation(res.data);
+          // setNumberApprenant(res.data.ToutalApprenants);
         });
     };
-    DataGroupes();
+    anne_formation();
+    
+    
 
-    //Api Apprenants Groupe
-    // const ApprenantsGroupe = async () => {
-    //     await axios.get("http://localhost:8000/api/ListApprenant/" + idFormateur)
-    //         .then(res => {
-    //             // setDataGroupes(res.data)
-    //             // console.log(res.data)
-    //         })
-    // }
-    // ApprenantsGroupe()
-
-    // Api One Groupe
-    const OneGroupe = async () => {
-      await axios
-        .get("http://localhost:8000/api/OneGroupe/" + idFormateur)
-        .then((res) => {
-          setOneGroupe(res.data[0]);
-          setNumberApprenant(res.data[1]);
-        });
-    };
-    OneGroupe();
-    setIdGroupe(cookies.get("GroupeID"));
   }, []);
-
-  //selection avec anné scolaire
-  function selectDate(e) {
-    // setIdParames(ParamsId.id);
-    const id = e.target.value;
-    navigate(generatePath("/dashbord/:id", { id }));
-
-    let idGroupe = e.target.value;
-    // console.log(idGroupe)
-    axios.get("http://localhost:8000/api/groupes/" + idGroupe).then((res) => {
-      setOneGroupe(res.data[0][0]);
-      setNumberApprenant(res.data[1]);
-      setAllBriefs(res.data[2]);
-      // console.log(res.data)
-    });
-
-    //Avancement groupe after select data
-    axios
-      .get("http://localhost:8000/api/AvancementGroups/" + idGroupe)
-      .then((res) => {
-        setPourcentage(res.data.toFixed(2));
-      });
-    axios
-      .get("http://localhost:8000/api/ListApprenant/" +  ParamsId.id)
-      .then((res) => {
-        setApprenants(res.data.items);
-      });
-    //   console.log(e.target.value)
+  
+  
+  const selectAnnee_scolaire=(e)=>{
+    SetChangeId(e.target.value)
+    const getGroupe = async () => {
+      await axios
+        .get("http://localhost:8000/api/getGroupe/" + e.target.value)
+        .then((res) => {
+          console.log(res.data)
+          setOneGroupe(res.data.Groupe);
+          setNumberApprenant(res.data.ToutalApprenant);
+        });
+        
+    };
+    getGroupe();
+    
+    
   }
-
- 
+  
+  
   return (
     <div>
       <div className="container">
         <div className="row">
           <div className="col-sm-9">
             <h1>Tableau de borde d’état d’avancement</h1>
-          </div>
-          <div className="col-sm">
-            <select onChange={selectDate} name="" id="">
-              {DataGroupes.map((value) => (
-                <option key={value.id} value={value.id}>
-                  {value.Annee_scolaire}
-                </option>
-              ))}
-            </select>
+         <select onChange={selectAnnee_scolaire} name="" id="">
+          {Anne_formation.map(value=>
+          <option key={value.id} value={value.Annee_formation_id}>{value.Annee_scolaire} </option>
+          )}
+         </select>
           </div>
         </div>
+
         <div style={{ border: "23" }}>
           <br />
         </div>
@@ -142,10 +97,10 @@ function Dashbord() {
           <br />
           <div className="row">
             {/* etat du groupe */}
-           <AvancementGroupe/>
+           <AvancementGroupe ChangeId={ChangeId} />
 
             {/* etat d'apprenant */}
-           <AvancementApprenant idP={ParamsId.id} />
+           <AvancementApprenant  />
 
             {/* etat des briefs */}
           <AvancementBriefs/>

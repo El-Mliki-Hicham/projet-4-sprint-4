@@ -6,7 +6,7 @@ import { useEffect,useState   } from "react";
 import Cookies from "universal-cookie";
 
 
-function AvancementGroupe (){
+function AvancementGroupe (props){
     
     const [Pourcentage, setPourcentage] = useState([]);
     const cookies = new Cookies();
@@ -15,21 +15,36 @@ function AvancementGroupe (){
     let idFormateur = cookies.get("FormateurID");
 
     const avancement = async () => {
-        await axios.get("http://localhost:8000/api/OneGroupe/" + idFormateur)
+        await axios.get("http://localhost:8000/api/Groupe/" + idFormateur)
           .then((res) => {
             
-            setPourcentage(res.data[3].toFixed(0))
-            cookies.set("GroupeID", res.data[0].idGroupe);
+            setPourcentage(res.data.AvancementGroupe[0].Percentage)
+            cookies.set("GroupeID", res.data.Groupe.idGroupe);
           });
 
         };
         avancement()   
    
-}, []);
-
-
+      }, []);
+      const AvancementGroups = async () => {
+          await axios.get("http://localhost:8000/api/AvancementGroups/" + props.ChangeId)
+            .then((res) => {
+              console.log(res.data)
+              setPourcentage(res.data.Percentage)
+              // cookies.set("GroupeID", res.data.Groupe.idGroupe);
+            });
+    
+          };
+          
+          
+          AvancementGroups()   
+ 
+      
+     
+  
+      
     const myChart = new QuickChart();
-
+    
     myChart.setConfig({
       type: "progressBar",
       data: {
@@ -55,7 +70,7 @@ function AvancementGroupe (){
         },
       },
     });
-  
+    // console.log(props.data)
     const chartImagee = myChart.getUrl();
 
     return(
