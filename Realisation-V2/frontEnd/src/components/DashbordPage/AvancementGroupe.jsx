@@ -33,7 +33,7 @@ function AvancementGroupe(props){
       const AvancementGroups = async () => {
           await axios.get("http://localhost:8000/api/AvancementGroups/" + props.ChangeId)
             .then((res) => {
-              // console.log(res.data)
+              console.log(res.data)
               setPourcentage(res.data.Percentage)
               // cookies.set("GroupeID", res.data.Groupe.idGroupe);
             });

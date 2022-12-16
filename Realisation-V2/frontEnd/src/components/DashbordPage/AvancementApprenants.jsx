@@ -21,6 +21,7 @@ function AvancementApprenant(props){
             await axios
               .get("http://localhost:8000/api/Groupe/" + idFormateur)
               .then((res) => {
+                
                 setApprenants(res.data.ListApprenants);
                 setAllBriefs(res.data.ListBrifes);
                 setApprenantAV(res.data.ListBrifes);
@@ -45,6 +46,7 @@ const selectBrief=(e)=>{
         "http://localhost:8000/api/Av_ApprenantTache/" +  IdGroupe + "/" + briefId
         )
         .then((res) => {
+          
             setApprenantAV(res.data.avancemantBrief);
             setApprenants(res.data.avancemantBrief);
         });
@@ -57,8 +59,9 @@ const selectBrief=(e)=>{
       const AvancementGroups = async () => {
           await axios.get("http://localhost:8000/api/AvancementApprenant/" + props.ChangeId)
             .then((res) => {
-              console.log(res.data)
+              // console.log(res.data)
               setApprenantAV(res.data.avancemantBrief);
+              setApprenants(res.data.avancemantBrief);
               // cookies.set("GroupeID", res.data.Groupe.idGroupe);
             });
     
