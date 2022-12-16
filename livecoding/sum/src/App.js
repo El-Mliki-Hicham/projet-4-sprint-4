@@ -1,6 +1,15 @@
 import logo from './logo.svg';
 import "./style.css";
 import { useState } from 'react';
+
+function Title (){
+
+  return (
+    <h1> La som</h1>
+  )
+}
+
+
 function App() {
  
   let a = 2
@@ -10,9 +19,8 @@ function App() {
   console.log(result)
   return (
     <div className="App">
-    <h1> La som</h1>
+      <Title />
     <p>La som de x et y =  {result}</p>
-
 
     </div>
   );

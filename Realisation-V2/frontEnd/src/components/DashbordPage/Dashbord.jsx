@@ -100,10 +100,10 @@ function Dashbord() {
            <AvancementGroupe ChangeId={ChangeId} />
 
             {/* etat d'apprenant */}
-           <AvancementApprenant  />
+           <AvancementApprenant ChangeId={ChangeId} />
 
             {/* etat des briefs */}
-          <AvancementBriefs/>
+          <AvancementBriefs ChangeId={ChangeId}/>
           {/* {ParamsId.id} */}
 
           </div>

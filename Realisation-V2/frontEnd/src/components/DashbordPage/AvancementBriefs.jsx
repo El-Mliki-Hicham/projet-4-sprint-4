@@ -3,7 +3,7 @@ import axios from "axios";
 import Cookies from "universal-cookie";
 import QuickChart from "quickchart-js";
 import { useState,useEffect } from "react";
-function AvancementBriefs(){
+function AvancementBriefs(props){
 
 const [AllBriefs,setAllBriefs]=useState([]);
 const cookies = new Cookies()
@@ -22,6 +22,22 @@ useEffect(() => {
       AvancementBrief();
 
 }, []);
+
+if (props.ChangeId) {
+
+  const AvancementB = async () => {
+      await axios.get("http://localhost:8000/api/AvancementBrief/" + props.ChangeId)
+        .then((res) => {
+          // console.log(res.data)
+          setAllBriefs(res.data)
+          // cookies.set("GroupeID", res.data.Groupe.idGroupe);
+        });
+
+      };
+      
+      
+      AvancementB()   
+    }
 
 
 const ChartBrifes = new QuickChart();

@@ -5,7 +5,7 @@ import QuickChart from "quickchart-js";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-function AvancementApprenant(){
+function AvancementApprenant(props){
     
     const ParamsId = useParams();
     const [ApprenantAV, setApprenantAV] = useState([]);
@@ -33,6 +33,8 @@ function AvancementApprenant(){
 
     }, []);
 
+
+
   
     
 // selectionner brief
@@ -44,10 +46,29 @@ const selectBrief=(e)=>{
         )
         .then((res) => {
             setApprenantAV(res.data.avancemantBrief);
+            setApprenants(res.data.avancemantBrief);
         });
         
         // console.log(e.target.value)
     }
+
+    if (props.ChangeId) {
+
+      const AvancementGroups = async () => {
+          await axios.get("http://localhost:8000/api/AvancementApprenant/" + props.ChangeId)
+            .then((res) => {
+              console.log(res.data)
+              setApprenantAV(res.data.avancemantBrief);
+              // cookies.set("GroupeID", res.data.Groupe.idGroupe);
+            });
+    
+          };
+          
+          
+          AvancementGroups()   
+        }
+      
+
 
     
     // Chart Apprenant

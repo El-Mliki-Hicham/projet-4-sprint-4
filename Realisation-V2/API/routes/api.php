@@ -19,6 +19,8 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::get('AvancementApprenant/{id}', [DashboardController::class,'AvancementApprenant'])->name('AvancementApprenant');
+Route::get('AvancementBrief/{id}', [DashboardController::class,'AvancementBrief'])->name('AvancementBrief');
 Route::get('AvancementGroups/{id}', [DashboardController::class,'AvancementGroups'])->name('AvancementGroups');
 Route::get('getGroupe/{id}', [DashboardController::class,'getGroupe'])->name('getGroupe');
 Route::get('anne_formation/{id}', [DashboardController::class,'anne_formation'])->name('anne_formation');

@@ -6,7 +6,7 @@ import { useEffect,useState   } from "react";
 import Cookies from "universal-cookie";
 
 
-function AvancementGroupe (props){
+function AvancementGroupe(props){
     
     const [Pourcentage, setPourcentage] = useState([]);
     const cookies = new Cookies();
@@ -26,10 +26,14 @@ function AvancementGroupe (props){
         avancement()   
    
       }, []);
+
+
+      if (props.ChangeId) {
+
       const AvancementGroups = async () => {
           await axios.get("http://localhost:8000/api/AvancementGroups/" + props.ChangeId)
             .then((res) => {
-              console.log(res.data)
+              // console.log(res.data)
               setPourcentage(res.data.Percentage)
               // cookies.set("GroupeID", res.data.Groupe.idGroupe);
             });
@@ -38,7 +42,7 @@ function AvancementGroupe (props){
           
           
           AvancementGroups()   
- 
+        }
       
      
   
