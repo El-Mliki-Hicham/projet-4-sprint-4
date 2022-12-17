@@ -4,6 +4,7 @@ import Cookies from "universal-cookie";
 import QuickChart from "quickchart-js";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { useCallback } from "react";
 
 function AvancementApprenant(props){
     
@@ -21,10 +22,10 @@ function AvancementApprenant(props){
             await axios
               .get("http://localhost:8000/api/Groupe/" + idFormateur)
               .then((res) => {
-                
+                // console.log(res.data)
                 setApprenants(res.data.ListApprenants);
                 setAllBriefs(res.data.ListBrifes);
-                setApprenantAV(res.data.ListBrifes);
+                setApprenantAV(res.data.FirstBrief);
                 setIdGroupe(res.data.Groupe.idGroupe);
               });
           };
@@ -46,7 +47,8 @@ const selectBrief=(e)=>{
         "http://localhost:8000/api/Av_ApprenantTache/" +  IdGroupe + "/" + briefId
         )
         .then((res) => {
-          
+                        // console.log(res.data)
+
             setApprenantAV(res.data.avancemantBrief);
             setApprenants(res.data.avancemantBrief);
         });
@@ -54,22 +56,22 @@ const selectBrief=(e)=>{
         // console.log(e.target.value)
     }
 
-    if (props.ChangeId) {
+    // if (props.ChangeId) {
 
-      const AvancementGroups = async () => {
+      const AvancementGroups = React.useCallback( async () => {
           await axios.get("http://localhost:8000/api/AvancementApprenant/" + props.ChangeId)
             .then((res) => {
-              // console.log(res.data)
+              console.log(res.data)
               setApprenantAV(res.data.avancemantBrief);
               setApprenants(res.data.avancemantBrief);
               // cookies.set("GroupeID", res.data.Groupe.idGroupe);
             });
     
-          };
+          },[]);
           
           
           AvancementGroups()   
-        }
+        // }
       
 
 
@@ -82,7 +84,7 @@ const selectBrief=(e)=>{
       data: {
         datasets: [
           {
-            data: ApprenantAV.map((value) => value.Percentage),
+            data: ApprenantAV.map((value) => value.Percentage ),
             backgroundColor: "blue",
           },
         ],
