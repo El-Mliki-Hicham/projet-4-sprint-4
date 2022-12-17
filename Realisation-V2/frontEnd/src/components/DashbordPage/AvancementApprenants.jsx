@@ -56,22 +56,23 @@ const selectBrief=(e)=>{
         // console.log(e.target.value)
     }
 
-    // if (props.ChangeId) {
+    if (props.ChangeId) {
 
-      const AvancementGroups = React.useCallback( async () => {
+      const AvancementGroups = async () => {
           await axios.get("http://localhost:8000/api/AvancementApprenant/" + props.ChangeId)
             .then((res) => {
               console.log(res.data)
               setApprenantAV(res.data.avancemantBrief);
               setApprenants(res.data.avancemantBrief);
+              setAllBriefs(res.data.ListBrief);
               // cookies.set("GroupeID", res.data.Groupe.idGroupe);
             });
     
-          },[]);
+          };
           
           
           AvancementGroups()   
-        // }
+        }
       
 
 
