@@ -23,21 +23,21 @@ useEffect(() => {
 
 }, []);
 
-// if (props.ChangeId) {
+if (props.ChangeId) {
 
-//   const AvancementB = async () => {
-//       await axios.get("http://localhost:8000/api/AvancementBrief/" + props.ChangeId)
-//         .then((res) => {
-//           // console.log(res.data)
-//           setAllBriefs(res.data)
-//           // cookies.set("GroupeID", res.data.Groupe.idGroupe);
-//         });
+  const AvancementB = async () => {
+      await axios.get("http://localhost:8000/api/AvancementBrief/" + props.ChangeId)
+        .then((res) => {
+          // console.log(res.data)
+          setAllBriefs(res.data)
+          // cookies.set("GroupeID", res.data.Groupe.idGroupe);
+        });
 
-//       };
+      };
       
       
-//       AvancementB()   
-//     }
+      AvancementB()   
+    }
 
 
 const ChartBrifes = new QuickChart();

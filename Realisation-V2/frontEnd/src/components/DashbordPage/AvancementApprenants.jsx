@@ -38,7 +38,7 @@ function AvancementApprenant(props){
 
 
   
-    
+   
 // selectionner brief
 const selectBrief=(e)=>{
     const briefId = e.target.value;
