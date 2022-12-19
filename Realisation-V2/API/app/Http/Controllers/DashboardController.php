@@ -7,7 +7,7 @@ use App\Models\formateur;
 use App\Models\groupes_apprenant;
 use Illuminate\Support\Facades\DB;
 use App\Models\apprenant_preparation_tach;
-
+use App\Models\groupes_preparation_brief;
 
 class DashboardController extends Controller
 {
@@ -292,8 +292,33 @@ return    $AvancementBrief;
         ->get()
         ;
 
-// dd($BriefAV);
-        return response()->json(["avancemantBrief"=> $BriefAV]);
+
+
+        $listBrief= groupes_preparation_brief::select(
+"Nom_du_brief",
+"preparation_brief.id"
+            // "preparation_brief.Nom_du_brief",'preparation_brief.id as id' ,
+            )
+            ->join('apprenant_preparation_brief','groupes_preparation_brief.Apprenant_preparation_brief_id','=','apprenant_preparation_brief.id')
+            // ->join('groupes_preparation_brief','apprenant_preparation_brief.id','=','groupes_preparation_brief.Apprenant_preparation_brief_id')
+            ->join('preparation_brief', 'apprenant_preparation_brief.Preparation_brief_id', '=','preparation_brief.id')
+            ->where([
+
+                ['groupes_preparation_brief.Groupe_id',$idG],
+
+
+                ])
+            ->groupBy("Nom_du_brief")
+            ->groupBy("preparation_brief.id")
+            ->orderBy('preparation_brief.id','desc')
+                ->get();
+
+
+// dd($listBrief);
+        return response()->json([
+            "avancemantBrief"=> $BriefAV,
+            "ListBrief"=>$listBrief
+    ]);
 }
 
 
